@@ -1,13 +1,24 @@
 #include "Control.h"
-#include <conio.h>
 #include <stdlib.h>
-
+#include <fstream>
+#include "memtrace.h"
+void save(PhoneBook& pb) {
+	string file = "phonebook_save.txt";
+	std::ofstream os(file);
+	pb.write(os);
+}
+void get_save(PhoneBook& pb) {
+	string file = "phonebook_save.txt";
+	std::ifstream is(file);
+	pb.read(is);
+}
 int read_int_from_terminal(string command) {
 	int num;
+
 	while (std::cout << command && !(std::cin >> num)) {
 		std::cin.clear(); //clear bad input flag
 		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); //discard input
-		std::cout << "Invalid input, please re-enter!" << endl;
+		std::cout << "Invalid input, please re-enter!" << std::endl;
 	}
 	return num;
 }
@@ -21,10 +32,9 @@ void terminal_header_view() {
 }
 void menu_view(size_t number_of_contacts) {
 	terminal_header_view();
-	std::cout << "1. View Contacts" << " (" << number_of_contacts << ")" << endl << "2. Add Contacts" << endl << "3. Search Contact" << endl << "4. Exit" << endl;
+	std::cout << "1. View Contacts" << " (" << number_of_contacts << ")" << endl << "2. Add Contacts" << endl << "3. Search Contact" << endl << "4. Save" << endl << "5. Exit" << endl;
 }
 void add_contact_view(Contact* ct) {
-	terminal_header_view();
 	cout << "Name:";
 	string name = "";
 	cin.ignore();
@@ -32,15 +42,10 @@ void add_contact_view(Contact* ct) {
 	ct->set_name(name);
 	cout << endl;
 }
-void search_view() {
-	terminal_header_view();
-	cout << "Give the name: ";
-}
-
 
 void list_contacts(PhoneBook& pb) {
 	for (size_t i = 0; i < pb.get_size(); i++) {
-		cout << i + 1 << ":" << pb.get(i).get_name() << endl;
+		cout << i + 1 << ":" << pb.get(i).get_name() << " (" << pb.get(i).get_size() << ")" << endl;
 	}
 }
 void add_contact(PhoneBook* pb) {
@@ -49,7 +54,7 @@ void add_contact(PhoneBook* pb) {
 	pb->getList()->add(ct);
 }
 
-void contact_view(Contact& c){
+void contact_view(Contact& c) {
 	cout << c.get_name() << ":" << endl;
 	for (size_t i = 0; i < c.get_size(); i++) {
 		cout << i + 1 << "->";
@@ -63,36 +68,18 @@ void contact_view(Contact& c){
 		cout << c.getRecord(i).get_type_of_childs() << endl;
 		cout << c.getRecord(i).get_address() << endl << endl;
 	}
-	
-	
 }
 void edit_contact_name(Contact& c) {
-		cout << "Give the new name: ";
-		string new_name;
-		cin.ignore();
-		getline(cin, new_name);
-		cout << endl;
-		c.set_name(new_name);
-	
-}
-
-void search_contact(PhoneBook* pb) { //miakar ez lenni?
-	search_view();
-	string n; //searchable name
+	cout << "Old name: " << c.get_name() << endl;;
+	cout << "Give the new name: ";
+	string new_name;
 	cin.ignore();
-	getline(cin, n);
+	getline(cin, new_name);
 	cout << endl;
-	int contactNumber = pb->searchContact(n);
-	if (contactNumber < 0) {
-		cout << "Name was not found" << endl;
-	}
-	else {
-		contact_view(pb->get(contactNumber));
-	}
+	if (new_name != "")
+		c.set_name(new_name);
 }
-void edit_record_wiew(Record& r) {
 
-}
 recordType set_record_type() {
 	recordType recordt;
 	int choice;
@@ -111,17 +98,13 @@ recordType set_record_type() {
 	return recordt;
 }
 void add_record_view(Contact& c) {
-	
-	
 	int choice;
 	int exit = stay;
 
-	
-
-	while(exit) {
+	while (exit) {
 		system("CLS");
 		contact_view(c);
-		
+
 		numberType nt;
 		phoneNumber nb;
 		addressType at;
@@ -133,8 +116,6 @@ void add_record_view(Contact& c) {
 		PhoneNumber* nn;
 		Email* m;
 		IM* im;
-
-		
 
 		cout << "1 = Phone Number, 2 = Address, 3 = Email, 4 = IM, 0 = back" << endl;
 		choice = read_int_from_terminal("Choice: ");
@@ -151,7 +132,7 @@ void add_record_view(Contact& c) {
 			else if (choice == 2) {
 				nt = Satellite;
 			}
-			else if(choice == 0){
+			else if (choice == 0) {
 				exit = turn_off;
 				break;
 			}
@@ -162,18 +143,17 @@ void add_record_view(Contact& c) {
 				cout << endl << "Invalid command!";
 				break;
 			}
-			
 
 			cout << "Country code(+36): ";
 			cin.ignore();
-			getline(cin,nb.countryCode);
-			
+			getline(cin, nb.countryCode);
+
 			nb.provider = read_int_from_terminal("Provider number: ");
 			nb.number = read_int_from_terminal("Number: ");
 
 			nn = new PhoneNumber(recordt, nt, nb);
 			c.get_list()->add(nn);
-			
+
 			break;
 		case 2: //Cím record hozzáadása
 			recordt = set_record_type();
@@ -187,7 +167,7 @@ void add_record_view(Contact& c) {
 			at.number = read_int_from_terminal("House number: ");
 			ad = new Address(recordt, at);
 			c.get_list()->add(ad);
-			
+
 			break;
 		case 3: //Email record hozzáadása
 			recordt = set_record_type();
@@ -196,11 +176,11 @@ void add_record_view(Contact& c) {
 			getline(cin, mail);
 			m = new Email(recordt, mail);
 			c.get_list()->add(m);
-			
+
 			break;
 		case 4: // im hozzáadás
 			recordt = set_record_type();
-			cout << "1 = Skype, 2 = Zoom, 3 = Discord, 0 = back" <<endl;
+			cout << "1 = Skype, 2 = Zoom, 3 = Discord, 0 = back" << endl;
 			choice = read_int_from_terminal("Choice: ");
 			if (choice == 1) {
 				type = Skype;
@@ -208,7 +188,7 @@ void add_record_view(Contact& c) {
 			else if (choice == 2) {
 				type = Zoom;
 			}
-			else if(choice == 3){
+			else if (choice == 3) {
 				type = Discord;
 			}
 			else if (choice == 0) {
@@ -223,25 +203,105 @@ void add_record_view(Contact& c) {
 			getline(cin, addr);
 			im = new IM(recordt, type, addr);
 			c.get_list()->add(im);
-			
-			break; 
+
+			break;
 		case 0:  //Kilépés
 			exit = turn_off;
-			break; 
+			break;
 		default: //Nem jó parancs
 			cout << endl << "Invalid command!" << endl;
 			break;
 		}
 	}
 }
+void list_contact_view(int contact_number, PhoneBook& pb) {
+	contact_view(pb.get(contact_number - 1));
+	cout << "1 = Edit Contact name, 2 = Add record, 3 = Delete record, 4 = Delete contact, 0 = Back " << endl;
+	int choice;
+	choice = read_int_from_terminal("Choice: ");
+	system("CLS");
+	if (choice == 1) {
+		edit_contact_name(pb.get(contact_number - 1));
+		system("CLS");
+	}
+	else if (choice == 2) {
+		add_record_view(pb.get(contact_number - 1));
+		system("CLS");
+	}
+	else if (choice == 3) { //delete record
+		contact_view(pb.get(contact_number - 1));
+		choice = read_int_from_terminal("Which record: ");
+		if (choice - 1 > pb.get_size() || choice - 1 < 0) {
+			cout << "Invalid choice" << endl;
+		}
+		else {
+			if (choice > pb.get(contact_number - 1).get_size() || choice <= 0) {
+				cout << "Invalid choice!" << endl;
+			}
+			else {
+				pb.get(contact_number - 1).get_list()->remove_from_list(choice - 1);
+			}
+		}
+	}
+	else if (choice == 4) {
+		cout << "Are you sure that you want to delete the whole contact?" << endl;
+		choice = read_int_from_terminal("1 = yes, 2 = no\nSure?: ");
+		if (choice == 1)
+			pb.getList()->remove_from_list(contact_number - 1);
+	}
+	else if (choice == 0) {
+		//itt kilép
+	}
+	else {
+		cout << endl << "Invalid command!" << endl;
+	}
+}
+List<Contact*>* search(string s, PhoneBook& pb) {
+	List<Contact*>* return_list = new List<Contact*>();
+	for (size_t i = 0; i < pb.get_size(); i++) {
+		if (pb.get(i).search(s)) {
+			return_list->add(&pb.get(i));
+		}
+	}
+	return return_list;
+}
 
+void search_view(PhoneBook& pb) {
+	string s;
+	terminal_header_view();
+	cout << "Search: ";
+	getline(cin, s);
+	cin.ignore();
+	List<Contact*>* list;
+	list = search(s, pb);
+	if (list->get_size() <= 0) {
+		cout << "Not found.";
+		system("CLS");
+	}
+	else {
+		for (size_t i = 0; i < list->get_size(); i++) {
+			cout << i + 1 << ".Result:" << endl;
+			cout << list->get_data(i)->get_name();
+			cout << endl;
+		}
+		cout << endl;
+		int selected = read_int_from_terminal("Select: ");
+		system("CLS");
+		list_contact_view(selected, pb);
+	}
+	delete list;
+}
 void menu(PhoneBook* pb) {
+	int choice = 1;
 	int menu_state = 0;
 	int exit = stay;
+
 	while (exit) {
 		system("CLS");
 		menu_view(pb->get_size());
+
 		menu_state = read_int_from_terminal("Command: ");
+
 		system("CLS");
 		switch (menu_state - 1)
 		{
@@ -249,49 +309,36 @@ void menu(PhoneBook* pb) {
 			terminal_header_view();
 			list_contacts(*pb);
 			int contact_number;
-			cout << endl; // Nézd meg kell-e ez ide
+
 			contact_number = read_int_from_terminal("Give the contact number(0 is back): ");
-			cout << endl;
+
 			system("CLS");
-			if (contact_number == 0)
+			if (contact_number == 0 || contact_number - 1 > pb->get_size())
 				break;
-			contact_view(pb->get(contact_number - 1));
-			cout << "1 = Edit Contact name, 2 = Add record, 3 = Edit record, 0 = Back " << endl;
-			int choice;
-			choice = read_int_from_terminal("Choice: ");
-			system("CLS");
-			if (choice == 1) {
-				edit_contact_name(pb->get(contact_number - 1));
-				system("CLS");
-			}
-			else if (choice == 2) {
-				add_record_view(pb->get(contact_number - 1));
-				system("CLS");
-			}
-			else if (choice == 3) {
-				//lesz vmi
-			}
-			else if(choice == 0){
-				break;
-			}
-			else {
-				cout << endl << "Invalid command!" << endl;
-			}
-				break;
+			list_contact_view(contact_number, *pb);
+			break;
 		case add_Contact_Screen:
 			terminal_header_view();
 			add_contact(pb);
 			break;
 		case search_Contact_Screen:
-
+			search_view(*pb);
 			break;
 		case exit_app:
+			cout << "Save?" << endl << "(For any other command, save is default)" << endl;
+			choice = read_int_from_terminal("1 = yes, 2 = no\nCommand: ");
+			if (choice != 2) {
+				save(*pb);
+			}
 			exit = turn_off;
 			break;
+		case save_screen:
+			save(*pb);
+			break;
 		default:
-			
+
 			cout << endl << "Invalid command!" << endl;
 			break;
-			}
 		}
 	}
+}

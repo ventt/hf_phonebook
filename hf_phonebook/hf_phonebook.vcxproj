@@ -150,18 +150,18 @@
     <ClCompile Include="Contact.cpp" />
     <ClCompile Include="Control.cpp" />
     <ClCompile Include="hf_phonebook.cpp" />
+    <ClCompile Include="memtrace.cpp" />
     <ClCompile Include="PhoneBook.cpp" />
     <ClCompile Include="RecordList.cpp" />
     <ClCompile Include="RecordTypes.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Contact.h" />
-    <ClInclude Include="ContactList.h" />
     <ClInclude Include="Control.h" />
+    <ClInclude Include="memtrace.h" />
     <ClInclude Include="misc.h" />
     <ClInclude Include="PhoneBook.h" />
     <ClInclude Include="Record.h" />
-    <ClInclude Include="RecordList.h" />
     <ClInclude Include="RecordTypes.h" />
     <ClInclude Include="Serializable.h" />
     <ClInclude Include="TemplateList.h" />

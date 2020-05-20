@@ -1,0 +1,37 @@
+3
+Proba Lajos
+4
+4
+1
+2
++36;1;457564
+1
+2
+ifjprobalajos@citromail.hu
+1
+1
+probalajos@gmail.com
+2
+2
+Hungary;Budapest;probstreet;21
+Lapu Levente
+4
+3
+2
+2
+Lapu#levi#111
+1
+2
+lapukft@gmail.com
+2
+2
+Hungary;Lapucity;lapustreet;78
+4
+2
+1
++36;66;4578963
+Proba Dani
+1
+1
+1
+probadancso@yahoo.com

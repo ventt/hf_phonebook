@@ -1,37 +1,39 @@
 #ifndef MISC_H
 #define MISC_H
 #include <string>
+#include <iostream>
 /*enumok és egyéb típusok amikre szüksége lehet a programnak*/
 using std::string;
 
 enum recordType
-    {
-        Personal,
-        Work
-    };
+{
+	Personal,
+	Work
+};
 enum imType
-    {
-        Skype,
-        Zoom,
-        Discord
-    };
+{
+	Skype,
+	Zoom,
+	Discord
+};
 enum numberType
-    {
-        Mobil,
-        Landline,
-        Satellite
-    };
+{
+	Mobil,
+	Landline,
+	Satellite
+};
 struct addressType
-    {
-    string country;
-    string city;
-    string street;
-    int number;
-    };
+{
+	string country;
+	string city;
+	string street;
+	int number;
+};
 struct phoneNumber
-    {
-    string countryCode;
-    int provider;
-    int number;
-    };
+{
+	string countryCode;
+	int provider;
+	int number;
+};
+
 #endif
