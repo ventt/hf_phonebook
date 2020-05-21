@@ -4,6 +4,10 @@
 #include "misc.h"
 #include <sstream>
 #include "memtrace.h"
+/*stringet kap és letrehoz egy enum phoneNumber tipusu valtozot
+@param string
+return phoneNumber
+*/
 phoneNumber get_phone_number(string l) {
 	phoneNumber phone_number;
 	string string_int;
@@ -13,6 +17,10 @@ phoneNumber get_phone_number(string l) {
 	std::getline(line, string_int, ';'); phone_number.number = stoi(string_int);
 	return phone_number;
 }
+/*Stringet kap és letrehoz egy enum addressType tipusu valtozot
+@param string
+return phoneNumber
+*/
 addressType get_address(string l) {
 	addressType  address_type;
 	std::stringstream line(l);
@@ -23,6 +31,9 @@ addressType get_address(string l) {
 	std::getline(line, string_int, ';'); address_type.number = stoi(string_int);
 	return address_type;
 }
+/*Parameterkent megadott filestreambe ir ki egy Contact class-t
+@param std::ofstream&
+*/
 void Contact::write(std::ofstream& os) const {
 	os << this->name << std::endl;
 	os << this->list->get_size() << std::endl;
@@ -30,6 +41,10 @@ void Contact::write(std::ofstream& os) const {
 		this->list->get_data(i)->write(os);
 	}
 }
+/*Megvizsgalja a Contact nevében és a Contact altal tarolt adatokban, hogy elofordul-e a parameterkent kapott string, bool-al ter vissza
+@param string
+return bool
+*/
 bool Contact::search(string s) {
 	if (s.empty())
 		return false;
@@ -46,6 +61,9 @@ bool Contact::search(string s) {
 	}
 	return false;
 }
+/*Parameterkent kapott file streambol beolvas egy Contact class-t majd a benne tarolt Recordokat is hozzafuzi a Contact list-hez
+@param std::ifstream&
+*/
 void Contact::read(std::ifstream& is) {
 	size_t size = 0;
 	is >> size;

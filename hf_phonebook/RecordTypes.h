@@ -52,7 +52,7 @@ class PhoneNumber : public Record {
 	numberType number_type;
 	phoneNumber number;
 public:
-	PhoneNumber() : Record() {}
+	PhoneNumber() : Record() {} //default konstruktor
 	PhoneNumber(recordType r, numberType t, phoneNumber n) : Record(r), number_type(t), number(n) {}
 	virtual string record_type() const { return "Phone number"; };
 	virtual string get_type_of_childs() const;

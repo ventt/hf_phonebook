@@ -2,17 +2,25 @@
 #include <stdlib.h>
 #include <fstream>
 #include "memtrace.h"
-
+/*Elmenti a jelenlegi allapotot
+@param PhoneBook&
+*/
 void save(PhoneBook& pb) {
 	string file = "phonebook_save.txt";
 	std::ofstream os(file);
 	pb.write(os);
 }
+/*Fajlbol kiolvassa az elmentet allapotot
+@param PhoneBook&
+*/
 void get_save(PhoneBook& pb) {
 	string file = "phonebook_save.txt";
 	std::ifstream is(file);
 	pb.read(is);
 }
+/*szabvanyos bemenetrol olvas ki Integer-t, addig probalkozik amig nem Integert kap, megadhato stringkent a szoveg amivel bekeri az adatot
+@string
+*/
 int read_int_from_terminal(string command) {
 	int num;
 
@@ -23,6 +31,8 @@ int read_int_from_terminal(string command) {
 	}
 	return num;
 }
+/*Szabványos kimenetre kiirja a fejlecet
+*/
 void terminal_header_view() {
 	std::cout <<
 		"PPPPPP  hh                               BBBBB                 kk     " << endl <<
@@ -31,10 +41,14 @@ void terminal_header_view() {
 		"PP      hh   hh oo  oo nn   nn eeeee     BB   BB oo  oo oo  oo kk kk" << endl <<
 		"PP      hh   hh  oooo  nn   nn  eeeee    BBBBBB   oooo   oooo  kk  kk " << endl << endl;
 }
+/*Szabvanyos kimenetre kiirja a Contactokat
+*/
 void menu_view(size_t number_of_contacts) {
 	terminal_header_view();
 	std::cout << "1. View Contacts" << " (" << number_of_contacts << ")" << endl << "2. Add Contacts" << endl << "3. Search Contact" << endl << "4. Save" << endl << "5. Exit" << endl;
 }
+/*Contact hozzadasara szolgal, formalisan kiir a szabvanyos kimenetre
+*/
 void add_contact_view(Contact* ct) {
 	cout << "Name:";
 	string name = "";
@@ -43,18 +57,23 @@ void add_contact_view(Contact* ct) {
 	ct->set_name(name);
 	cout << endl;
 }
-
+/*Szabvanyos kimenetre kilistazza a PhoneBook altal tarolt Contactokat
+*/
 void list_contacts(PhoneBook& pb) {
 	for (size_t i = 0; i < pb.get_size(); i++) {
 		cout << i + 1 << ":" << pb.get(i).get_name() << " (" << pb.get(i).get_size() << ")" << endl;
 	}
 }
+/*Letrehoz es hozzafuz a PhoneBook altal tarolt listara egy Contactot
+*/
 void add_contact(PhoneBook* pb) {
 	Contact* ct = new Contact();
 	add_contact_view(ct);
 	pb->getList()->add(ct);
 }
-
+/* Formalisan kiir egy Contact-ot
+@param Contact&
+*/
 void contact_view(Contact& c) {
 	cout << c.get_name() << ":" << endl;
 	for (size_t i = 0; i < c.get_size(); i++) {
@@ -70,6 +89,9 @@ void contact_view(Contact& c) {
 		cout << c.getRecord(i).get_address() << endl << endl;
 	}
 }
+/* Formalisan kiirja az "edit contact name" ablakot es atirja a nevet a Contact-ban
+@param Contact&
+*/
 void edit_contact_name(Contact& c) {
 	cout << "Old name: " << c.get_name() << endl;;
 	cout << "Give the new name: ";
@@ -80,7 +102,9 @@ void edit_contact_name(Contact& c) {
 	if (new_name != "")
 		c.set_name(new_name);
 }
-
+/* Letrehoz egy enum recordType valtozot es visszater vele
+@return recordType
+*/
 recordType set_record_type() {
 	recordType recordt;
 	int choice;
@@ -98,6 +122,9 @@ recordType set_record_type() {
 	}
 	return recordt;
 }
+/*Letrehoz egy recordot amit hozzafuz a parameterkent kapott Contact listajahoz
+@Contact&
+*/
 void add_record_view(Contact& c) {
 	int choice;
 	int exit = stay;
@@ -215,6 +242,7 @@ void add_record_view(Contact& c) {
 		}
 	}
 }
+/*Kilistazza a parameterkent kapott int es PhoneBook& altal behatarolt Contact-ban tarolt elemeket, majd */
 void list_contact_view(int contact_number, PhoneBook& pb) {
 	contact_view(pb.get(contact_number - 1));
 	cout << "1 = Edit Contact name, 2 = Add record, 3 = Delete record, 4 = Delete contact, 0 = Back " << endl;
