@@ -262,8 +262,9 @@ void search_view(PhoneBook& pb) {
 	string s;
 	terminal_header_view();
 	cout << "Search: ";
-	getline(cin, s);
 	cin.ignore();
+	getline(cin, s);
+
 	List<size_t*>* list = pb.search(s);
 	if (list->get_size() <= 0) {
 		cout << "Not found.";
