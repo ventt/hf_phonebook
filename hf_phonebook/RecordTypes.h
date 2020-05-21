@@ -11,7 +11,7 @@ using std::string;
 class Email : public Record {
 	string emailAddress;
 public:
-	Email() : Record() {}
+	Email() : Record(), emailAddress("") {}
 	Email(recordType r, string emailAddr) : Record(r), emailAddress(emailAddr) {}
 	virtual string record_type() const { return "Email"; };
 	virtual string get_address() const { return emailAddress; };
@@ -25,7 +25,7 @@ class IM : public Record {
 	imType type;
 	string imAddress;
 public:
-	IM() : Record() {}
+	IM() : Record(), type(Skype), imAddress("") {}
 	IM(recordType r, imType t, string imAddr) : Record(r), type(t), imAddress(imAddr) {}
 	virtual string record_type() const { return "IM"; };
 	virtual string get_address() const { return imAddress; };
@@ -52,7 +52,7 @@ class PhoneNumber : public Record {
 	numberType number_type;
 	phoneNumber number;
 public:
-	PhoneNumber() : Record() {} //default konstruktor
+	PhoneNumber() : Record(), number_type(Mobil) {} //default konstruktor
 	PhoneNumber(recordType r, numberType t, phoneNumber n) : Record(r), number_type(t), number(n) {}
 	virtual string record_type() const { return "Phone number"; };
 	virtual string get_type_of_childs() const;

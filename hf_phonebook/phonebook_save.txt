@@ -1,13 +1,17 @@
-4
-Bla11
-0
-Bla3
-0
-Bla4
-0
-Asdasd
 1
+teszt elek
+4
 4
 1
 1
-+36;20;2517424
++36;20;555555
+1
+2
+tesztelek@teszt.com
+2
+1
+Hungary;Miskolc;Arany Janos;555
+3
+2
+2
+tesztelek#zoom

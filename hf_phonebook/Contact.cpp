@@ -68,27 +68,27 @@ void Contact::read(std::ifstream& is) {
 	size_t size = 0;
 	is >> size;
 
-	string l; //egesz sor
+	string l = ""; //egesz sor
 	std::stringstream line(l);
 
-	numberType number_type;
+	numberType number_type = Mobil;
 
-	imType imtype;
-	int type;
+	imType imtype = Skype;
+	int type = 0;
 
 	string string_int = "";
 
-	int pers_or_work;
-	int which_record;
-	recordType rt;
+	int pers_or_work = 0;
+	int which_record = 0;
+	recordType rt = Personal;
 	if (size == 0) { //üres recordList esetén
 		is.ignore();
 	}
 	for (size_t i = 0; i < size; i++) {
-		Email* mail = NULL;
-		IM* im = NULL;
-		Address* adr = NULL;
-		PhoneNumber* pn = NULL;
+		Email* mail = 0;
+		IM* im = 0;
+		Address* adr = 0;
+		PhoneNumber* pn = 0;
 		l.clear();
 		line.clear();
 

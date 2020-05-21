@@ -134,17 +134,17 @@ void add_record_view(Contact& c) {
 		system("CLS");
 		contact_view(c);
 
-		numberType nt;
+		numberType nt = Mobil;
 		phoneNumber nb;
 		addressType at;
 		imType type = Skype;
-		string mail;
-		string addr;
-		recordType recordt;
-		Address* ad;
-		PhoneNumber* nn;
-		Email* m;
-		IM* im;
+		string mail = "";
+		string addr = "";
+		recordType recordt = Personal;
+		Address* ad = 0;
+		PhoneNumber* nn = 0;
+		Email* m = 0;
+		IM* im = 0;
 
 		cout << "1 = Phone Number, 2 = Address, 3 = Email, 4 = IM, 0 = back" << endl;
 		choice = read_int_from_terminal("Choice: ");
@@ -247,7 +247,7 @@ void add_record_view(Contact& c) {
 void list_contact_view(int contact_number, PhoneBook& pb) {
 	contact_view(pb.get(contact_number - 1));
 	cout << "1 = Edit Contact name, 2 = Add record, 3 = Delete record, 4 = Delete contact, 0 = Back " << endl;
-	int choice;
+	int choice = 0;
 	choice = read_int_from_terminal("Choice: ");
 	system("CLS");
 	if (choice == 1) {
@@ -288,7 +288,7 @@ void list_contact_view(int contact_number, PhoneBook& pb) {
 }
 
 void search_view(PhoneBook& pb) {
-	string s;
+	string s = "";
 	terminal_header_view();
 	cout << "Search: ";
 	cin.ignore();

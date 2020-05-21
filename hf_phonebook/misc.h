@@ -24,16 +24,16 @@ enum numberType
 };
 struct addressType
 {
-	string country;
-	string city;
-	string street;
-	int number;
+	string country = "";
+	string city = "";
+	string street = "";
+	int number = 0;
 };
 struct phoneNumber
 {
-	string countryCode;
-	int provider;
-	int number;
+	string countryCode = "";
+	int provider = 0;
+	int number = 0;
 };
 
 #endif

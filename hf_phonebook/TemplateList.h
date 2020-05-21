@@ -1,5 +1,6 @@
 #ifndef TEMPLATELIST_H
 #define TEMPLATELIST_H
+#define NULL 0
 #include "memtrace.h"
 /*Heterogen kollekcio megvalositasa*/
 template <typename T>
