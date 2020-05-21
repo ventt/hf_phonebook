@@ -7,6 +7,10 @@
 #include "memtrace.h"
 #include "misc.h"
 using namespace std;
+struct Found {
+	size_t position;
+	string name;
+};
 enum menu_types {
 	list_contact_Screen,//0
 	add_Contact_Screen, //1

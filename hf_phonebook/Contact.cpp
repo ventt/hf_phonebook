@@ -31,9 +31,12 @@ void Contact::write(std::ofstream& os) const {
 	}
 }
 bool Contact::search(string s) {
-	if (this->name.find(s) != std::string::npos) {
+	if (s.empty())
+		return false;
+
+	if (this->name.find(s) != std::string::npos)
 		return true;
-	}
+
 	else {
 		for (size_t j = 0; j < this->get_size(); j++) {
 			if (this->getRecord(j).search(s)) {
@@ -89,7 +92,6 @@ void Contact::read(std::ifstream& is) {
 			std::getline(is, l);
 			mail = new Email(rt, l);
 			this->list->add(mail);
-
 			break;
 		}
 		case 2:

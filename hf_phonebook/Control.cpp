@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <fstream>
 #include "memtrace.h"
+
 void save(PhoneBook& pb) {
 	string file = "phonebook_save.txt";
 	std::ofstream os(file);
@@ -231,11 +232,11 @@ void list_contact_view(int contact_number, PhoneBook& pb) {
 	else if (choice == 3) { //delete record
 		contact_view(pb.get(contact_number - 1));
 		choice = read_int_from_terminal("Which record: ");
-		if (choice - 1 > pb.get_size() || choice - 1 < 0) {
+		if (choice - 1 > static_cast<int>(pb.get_size()) || choice - 1 < 0) {
 			cout << "Invalid choice" << endl;
 		}
 		else {
-			if (choice > pb.get(contact_number - 1).get_size() || choice <= 0) {
+			if (choice > static_cast<int>(pb.get(contact_number - 1).get_size()) || choice <= 0) {
 				cout << "Invalid choice!" << endl;
 			}
 			else {
@@ -256,15 +257,6 @@ void list_contact_view(int contact_number, PhoneBook& pb) {
 		cout << endl << "Invalid command!" << endl;
 	}
 }
-List<Contact*>* search(string s, PhoneBook& pb) {
-	List<Contact*>* return_list = new List<Contact*>();
-	for (size_t i = 0; i < pb.get_size(); i++) {
-		if (pb.get(i).search(s)) {
-			return_list->add(&pb.get(i));
-		}
-	}
-	return return_list;
-}
 
 void search_view(PhoneBook& pb) {
 	string s;
@@ -272,22 +264,23 @@ void search_view(PhoneBook& pb) {
 	cout << "Search: ";
 	getline(cin, s);
 	cin.ignore();
-	List<Contact*>* list;
-	list = search(s, pb);
+	List<size_t*>* list = pb.search(s);
 	if (list->get_size() <= 0) {
 		cout << "Not found.";
 		system("CLS");
 	}
 	else {
-		for (size_t i = 0; i < list->get_size(); i++) {
-			cout << i + 1 << ".Result:" << endl;
-			cout << list->get_data(i)->get_name();
+		cout << "List of matching items: " << endl;
+		int i = 0;
+		for (Node<size_t*>* it = list->get_head(); it != NULL; it = it->next, i++) {
+			cout << i + 1 << ": ";
+			cout << pb.get(*it->data).get_name();
 			cout << endl;
 		}
 		cout << endl;
 		int selected = read_int_from_terminal("Select: ");
 		system("CLS");
-		list_contact_view(selected, pb);
+		list_contact_view(selected - 1, pb);
 	}
 	delete list;
 }
@@ -313,7 +306,7 @@ void menu(PhoneBook* pb) {
 			contact_number = read_int_from_terminal("Give the contact number(0 is back): ");
 
 			system("CLS");
-			if (contact_number == 0 || contact_number - 1 > pb->get_size())
+			if (contact_number == 0 || contact_number - 1 > static_cast<int>(pb->get_size()))
 				break;
 			list_contact_view(contact_number, *pb);
 			break;

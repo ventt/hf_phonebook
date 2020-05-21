@@ -14,11 +14,11 @@ class PhoneBook {
 public:
 	PhoneBook() { list = new List<Contact*>(); }
 	Contact& get(size_t s) const { return *this->list->get_data(s); };
-	List<Contact*>* getList() { return this->list; };
-	size_t get_size() { return this->list->get_size(); }
+	List<Contact*>* getList() const { return this->list; };
+	size_t get_size() const { return this->list->get_size(); }
 	void write(std::ofstream&) const;
 	void read(std::ifstream&);
-	int searchContact(string);
+	List<size_t*>* search(string);
 	~PhoneBook() { delete list; };
 };
 #endif // PHONEBOOK_H

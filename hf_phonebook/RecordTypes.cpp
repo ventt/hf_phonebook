@@ -1,7 +1,7 @@
 #include "RecordTypes.h"
 #include "memtrace.h"
 
-string PhoneNumber::get_type_of_childs() {
+string PhoneNumber::get_type_of_childs() const {
 	string t;
 	if (number_type == Mobil) {
 		t = "Mobil";
@@ -17,7 +17,7 @@ string PhoneNumber::get_type_of_childs() {
 	}
 }
 
-string IM::get_type_of_childs() {
+string IM::get_type_of_childs() const {
 	string t;
 	if (type == Skype) {
 		t = "Skype";
@@ -32,12 +32,12 @@ string IM::get_type_of_childs() {
 		return t;
 	}
 }
-string Address::get_address() {
+string Address::get_address() const {
 	string t;
 	t = t + address.country + " " + address.city + " " + address.street + " " + std::to_string(address.number);
 	return t;
 }
-string PhoneNumber::get_address() {
+string PhoneNumber::get_address() const {
 	string t;
 	t = number.countryCode + std::to_string(number.provider) + std::to_string(number.number);
 	return t;
@@ -68,7 +68,7 @@ void Address::write(std::ofstream& os) const {
 void IM::write(std::ofstream& os) const {
 	os << 3 << std::endl;
 
-	if (this->type == Personal) {
+	if (this->get_type() == Personal) {
 		os << 1 << std::endl;
 	}
 	else {

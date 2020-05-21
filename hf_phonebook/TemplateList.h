@@ -5,12 +5,17 @@ template <typename T>
 struct Node {
 	T data;
 	Node* next;
-	~Node() {};
+	~Node() {
+		delete data;
+	};
 };
 template <typename T> class List {
 	Node<T>* head;
 public:
 	List() { head = NULL; };
+	Node<T>* get_head() {
+		return head;
+	}
 	void add(T new_data) {
 		Node<T>* n = new Node<T>();
 		n->data = new_data;
@@ -27,7 +32,7 @@ public:
 			iterator->next = n;
 		}
 	}
-	size_t get_size() const {
+	size_t get_size() {
 		size_t size = 0;
 		if (head == NULL) {
 			return size;
@@ -40,7 +45,7 @@ public:
 		}
 		return size;
 	}
-	T& get_data(size_t s) const {
+	T& get_data(size_t s) {
 		size_t it = 0;
 		Node<T>* iterator = head;
 		while (iterator->next != NULL && it < s) {
@@ -49,38 +54,47 @@ public:
 		}
 		return iterator->data;
 	}
-	void remove_from_list(size_t s) {
-		size_t it = 0;
-		Node<T>* iterator = head;
-		Node<T>* tmp;
-		if (s == 0) {
-			tmp = head;
-			head = iterator->next;
-			delete tmp;
+	void remove_from_list(size_t idx) {
+		Node<T>* it = head;
+
+		// Ha a headet toroljuk
+		if (idx == 0) {
+			head = head->next;
+			delete(it);
+			return;
 		}
-		else {
-			while (iterator->next != NULL && it < (s - 1)) {
-				it++;
-				iterator = iterator->next;
+
+		// Ha a mereten tul torlunk
+		if (idx >= get_size()) {
+			throw "Index out of range";
+		}
+
+		for (size_t i = 0; i < idx; i++, it = it->next)
+		{
+			// Ha megvan az elozo elem
+			if (i == idx - 1) {
+				Node<T>* temp = it->next;
+				it->next = it->next->next;
+				delete(temp);
+				return;
 			}
-			tmp = iterator->next;
-			iterator->next = tmp->next;
-			delete tmp;
 		}
 	};
 	~List() {
 		Node<T>* iterator = head;
 		Node<T>* tmp;
-		if (iterator->next == NULL) {
-			delete head;
-		}
-		else {
-			while (iterator->next != NULL) {
-				tmp = iterator;
-				iterator = iterator->next;
-				delete tmp;
+		if (iterator != NULL) {
+			if (iterator->next == NULL) {
+				delete head;
 			}
-			delete iterator;
+			else {
+				while (iterator->next != NULL) {
+					tmp = iterator;
+					iterator = iterator->next;
+					delete tmp;
+				}
+				delete iterator;
+			}
 		}
 	}
 };

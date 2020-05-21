@@ -14,6 +14,6 @@ int main()
 	PhoneBook* pb = new PhoneBook();
 	get_save(*pb);
 	menu(pb);
-
+	delete(pb);
 	return 0;
 }

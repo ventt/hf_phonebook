@@ -1,13 +1,21 @@
 #include "PhoneBook.h"
 
-int PhoneBook::searchContact(string n) {
-	for (size_t i = 0; i < this->get_size(); i++) {
-		if (n.compare(this->get(i).get_name())) {
-			return i;
+List<size_t*>* PhoneBook::search(string s) {
+	List<size_t*>* result = new List<size_t*>();
+
+	Node<Contact*>* it = this->list->get_head();
+	for (size_t i = 0; it != NULL; it = it->next, i++)
+	{
+		if (it->data->search(s)) {
+			size_t* p = new size_t;
+			*p = i;
+			result->add(p);
 		}
 	}
-	return -1;
-};
+
+	return result;
+}
+
 void PhoneBook::write(std::ofstream& os) const {
 	os << this->list->get_size() << std::endl;
 	for (size_t i = 0; i < this->list->get_size(); i++) {
@@ -20,7 +28,7 @@ void PhoneBook::read(std::ifstream& is) {
 	is >> size;
 	is.ignore();
 
-	for (size_t i = 0; i < size; i++) {
+	for (int i = 0; i < size; i++) {
 		std::getline(is, name);
 		Contact* ct = new Contact(name);
 		ct->read(is);

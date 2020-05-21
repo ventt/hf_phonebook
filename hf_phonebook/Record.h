@@ -10,11 +10,11 @@ protected:
 public:
 	Record() { type = recordType::Personal; }
 	Record(recordType t) : type(t) {}
-	recordType get_type() { return type; };
+	recordType get_type() const { return type; };
 	void set_type(recordType t) { type = t; };
-	virtual string record_type() = 0;
-	virtual string get_address() = 0;
-	virtual string get_type_of_childs() = 0;
+	virtual string record_type() const = 0;
+	virtual string get_address() const = 0;
+	virtual string get_type_of_childs() const = 0;
 	virtual void write(std::ofstream&) const = 0;
 	virtual bool search(string) = 0;
 	virtual ~Record() {};
