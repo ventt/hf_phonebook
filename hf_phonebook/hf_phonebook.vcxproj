@@ -152,7 +152,6 @@
     <ClCompile Include="hf_phonebook.cpp" />
     <ClCompile Include="memtrace.cpp" />
     <ClCompile Include="PhoneBook.cpp" />
-    <ClCompile Include="RecordList.cpp" />
     <ClCompile Include="RecordTypes.cpp" />
   </ItemGroup>
   <ItemGroup>

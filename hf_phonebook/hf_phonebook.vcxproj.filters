@@ -24,9 +24,6 @@
     <ClCompile Include="PhoneBook.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="RecordList.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="RecordTypes.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

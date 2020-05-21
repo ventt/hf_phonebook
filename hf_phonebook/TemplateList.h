@@ -1,6 +1,6 @@
 #ifndef TEMPLATELIST_H
 #define TEMPLATELIST_H
-#define NULL 0
+
 #include "memtrace.h"
 /*Heterogen kollekcio megvalositasa*/
 template <typename T>
@@ -18,7 +18,7 @@ struct Node {
 template <typename T> class List {
 	Node<T>* head;
 public:
-	List() { head = NULL; };
+	List() { head = 0; };
 	/*Visszaadja a lista elso elemet
 	*/
 	Node<T>* get_head() {
@@ -29,14 +29,14 @@ public:
 	void add(T new_data) {
 		Node<T>* n = new Node<T>();
 		n->data = new_data;
-		n->next = NULL;
+		n->next = 0;
 
-		if (head == NULL) {
+		if (head == 0) {
 			head = n;
 		}
 		else {
 			Node<T>* iterator = head;
-			while (iterator->next != NULL) {
+			while (iterator->next != 0) {
 				iterator = iterator->next;
 			}
 			iterator->next = n;
@@ -46,12 +46,12 @@ public:
 	*/
 	size_t get_size() {
 		size_t size = 0;
-		if (head == NULL) {
+		if (head == 0) {
 			return size;
 		}
 		size++;
 		Node<T>* iterator = head;
-		while (iterator->next != NULL) {
+		while (iterator->next != 0) {
 			size++;
 			iterator = iterator->next;
 		}
@@ -64,7 +64,7 @@ public:
 	T& get_data(size_t s) {
 		size_t it = 0;
 		Node<T>* iterator = head;
-		while (iterator->next != NULL && it < s) {
+		while (iterator->next != 0 && it < s) {
 			it++;
 			iterator = iterator->next;
 		}
@@ -104,12 +104,12 @@ public:
 	~List() {
 		Node<T>* iterator = head;
 		Node<T>* tmp;
-		if (iterator != NULL) {
-			if (iterator->next == NULL) {
+		if (iterator != 0) {
+			if (iterator->next == 0) {
 				delete head;
 			}
 			else {
-				while (iterator->next != NULL) {
+				while (iterator->next != 0) {
 					tmp = iterator;
 					iterator = iterator->next;
 					delete tmp;

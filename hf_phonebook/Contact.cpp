@@ -10,7 +10,7 @@ return phoneNumber
 */
 phoneNumber get_phone_number(string l) {
 	phoneNumber phone_number;
-	string string_int;
+	string string_int = 0;
 	std::stringstream line(l);
 	std::getline(line, phone_number.countryCode, ';');
 	std::getline(line, string_int, ';'); phone_number.provider = stoi(string_int);
@@ -24,7 +24,7 @@ return phoneNumber
 addressType get_address(string l) {
 	addressType  address_type;
 	std::stringstream line(l);
-	string string_int;
+	string string_int = 0;
 	std::getline(line, address_type.country, ';');
 	std::getline(line, address_type.city, ';');
 	std::getline(line, address_type.street, ';');
