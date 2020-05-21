@@ -22,7 +22,7 @@ void get_save(PhoneBook& pb) {
 @string
 */
 int read_int_from_terminal(string command) {
-	int num;
+	int num = 0;
 
 	while (std::cout << command && !(std::cin >> num)) {
 		std::cin.clear(); //clear bad input flag
@@ -95,7 +95,7 @@ void contact_view(Contact& c) {
 void edit_contact_name(Contact& c) {
 	cout << "Old name: " << c.get_name() << endl;;
 	cout << "Give the new name: ";
-	string new_name;
+	string new_name = "";
 	cin.ignore();
 	getline(cin, new_name);
 	cout << endl;
@@ -106,8 +106,9 @@ void edit_contact_name(Contact& c) {
 @return recordType
 */
 recordType set_record_type() {
-	recordType recordt;
-	int choice;
+	recordType recordt = Personal;
+	int choice = 0;
+
 	cout << "1 = Personal, 2 = Work" << endl;
 	choice = read_int_from_terminal("Command: ");
 	if (choice == 1) {
@@ -126,7 +127,7 @@ recordType set_record_type() {
 @Contact&
 */
 void add_record_view(Contact& c) {
-	int choice;
+	int choice = 0;
 	int exit = stay;
 
 	while (exit) {
