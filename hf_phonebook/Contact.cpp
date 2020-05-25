@@ -4,6 +4,17 @@
 #include "misc.h"
 #include <sstream>
 #include "memtrace.h"
+/** /Értékadó operátor
+	/param Contact&
+	/return Contact&
+*/
+Contact& Contact::operator=(const Contact& c) {
+	if (this != &c) {
+		this->name = c.name;
+		this->list = c.list;
+	}
+	return *this;
+}
 /** \stringet kap és letrehoz egy enum phoneNumber tipusu valtozot
 * \param string
 * \return phoneNumber

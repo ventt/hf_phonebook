@@ -22,11 +22,11 @@ public:
 };
 
 class IM : public Record {
-	imType type;
+	imType im_type; //typeról refactorálva im_type-ra
 	string imAddress;
 public:
-	IM() : Record(), type(Skype), imAddress("") {}
-	IM(recordType r, imType t, string imAddr) : Record(r), type(t), imAddress(imAddr) {}
+	IM() : Record(), im_type(Skype), imAddress("") {}
+	IM(recordType r, imType t, string imAddr) : Record(r), im_type(t), imAddress(imAddr) {}
 	virtual string record_type() const { return "IM"; };
 	virtual string get_address() const { return imAddress; };
 	virtual string get_type_of_childs() const;

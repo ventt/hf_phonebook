@@ -14,8 +14,14 @@ class Contact : public serializable {
 	string  name;
 	List<Record*>* list;
 public:
-	Contact() { list = new List<Record*>(); name = ""; };
+	Contact() : name(""), list(0) {}; //inicializáló listában adjuk meg a default értéket
 	Contact(string n) : name(n) { list = new List<Record*>(); };
+	Contact(string n, List<Record*>* l) : name(n), list(l) {};
+	Contact(const Contact& s) { //Másoló construktor
+		this->name = s.name;
+		this->list = s.list;
+	}
+	Contact& operator=(const Contact& c);
 	string get_name() { return name; };
 	void set_name(string n) { name = n; };
 	size_t get_size() { return this->list->get_size(); };

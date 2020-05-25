@@ -250,7 +250,7 @@ void add_record_view(Contact& c) {
 /** \Kilistazza a parameterkent kapott int es PhoneBook& altal behatarolt Contact-ban tarolt elemeket, majd
 * \param int, PhoneBook&
 */
-void list_contact_view(int contact_number, PhoneBook& pb) {
+void list_contact_view(int contact_number, const PhoneBook& pb) { //const pb
 	contact_view(pb.get(contact_number - 1));
 	cout << "1 = Edit Contact name, 2 = Add record, 3 = Delete record, 4 = Delete contact, 0 = Back " << endl;
 	int choice = 0;
@@ -303,7 +303,7 @@ void search_view(PhoneBook& pb) {
 	getline(cin, s);
 
 	List<size_t*>* list = pb.search(s);
-	if (list->get_size() <= 0) {
+	if (list->get_size() == 0) { // <= -> ==
 		cout << "Not found.";
 		system("CLS");
 	}
@@ -326,7 +326,6 @@ void search_view(PhoneBook& pb) {
 * \param pb
 */
 void menu(PhoneBook* pb) {
-	int choice = 1;
 	int menu_state = 0;
 	int exit = stay;
 
@@ -360,8 +359,7 @@ void menu(PhoneBook* pb) {
 			break;
 		case exit_app:
 			cout << "Save?" << endl << "(For any other command, save is default)" << endl;
-			choice = read_int_from_terminal("1 = yes, 2 = no\nCommand: ");
-			if (choice != 2) {
+			if (read_int_from_terminal("1 = yes, 2 = no\nCommand: ") != 2) { //choice el lett hagyva
 				save(*pb);
 			}
 			exit = turn_off;

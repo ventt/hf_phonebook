@@ -23,11 +23,11 @@ string PhoneNumber::get_type_of_childs() const {
 */
 string IM::get_type_of_childs() const {
 	string t;
-	if (type == Skype) {
+	if (im_type == Skype) {
 		t = "Skype";
 		return t;
 	}
-	else if (type == Zoom) {
+	else if (im_type == Zoom) {
 		t = "Zoom";
 		return t;
 	}
@@ -91,10 +91,10 @@ void IM::write(std::ofstream& os) const {
 		os << 2 << std::endl;
 	}
 
-	if (this->type == Skype) {
+	if (this->im_type == Skype) {
 		os << 1 << std::endl;  // 1 = Skype
 	}
-	else if (this->type == Zoom) {
+	else if (this->im_type == Zoom) {
 		os << 2 << std::endl; // 2 = Zoom
 	}
 	else {
