@@ -1,8 +1,8 @@
 #include "PhoneBook.h"
-/*Parameterkent kap egy stringet, es megvizsgalja hogy az PhoneBook class altal tarolt Contact lista elemeiben elofordul-e a parameterkent kapott string es
-a talatokbol keszit egy size_t listat.
-@param string
-@return List<size_t*>*
+/**Parameterkent kap egy stringet, es megvizsgalja hogy az PhoneBook class altal tarolt Contact lista elemeiben elofordul-e a parameterkent kapott string es
+* a talatokbol keszit egy size_t listat.
+* \param string
+* \return List<size_t*>*
 */
 List<size_t*>* PhoneBook::search(string s) {
 	List<size_t*>* result = new List<size_t*>();
@@ -19,8 +19,8 @@ List<size_t*>* PhoneBook::search(string s) {
 
 	return result;
 }
-/*Kiirja az egesz PhoneBook class allapotat a file streamre
-@param std::ofstream&
+/** \Kiirja az egesz PhoneBook class allapotat a file streamre
+* \param std::ofstream&
 */
 void PhoneBook::write(std::ofstream& os) const {
 	os << this->list->get_size() << std::endl;
@@ -28,8 +28,8 @@ void PhoneBook::write(std::ofstream& os) const {
 		this->list->get_data(i)->write(os);
 	}
 }
-/*Beolvas egy egesz PhoneBook classt a file streamrol
-@param std::ofstream&
+/** \Beolvas egy egesz PhoneBook classt a file streamrol
+* \param std::ofstream&
 */
 void PhoneBook::read(std::ifstream& is) {
 	string name;

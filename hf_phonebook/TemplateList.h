@@ -2,9 +2,10 @@
 #define TEMPLATELIST_H
 
 #include "memtrace.h"
+#include "cstddef"
 /*Heterogen kollekcio megvalositasa*/
 template <typename T>
-/*Node class
+/** \Node class
 */
 struct Node {
 	T data;
@@ -13,18 +14,19 @@ struct Node {
 		delete data;
 	};
 };
-/*Lista class amely egy Node class tipusu elso elem, Head-et tarol
+/** \Lista class amely egy Node class tipusu elso elem, Head-et tarol
 */
 template <typename T> class List {
 	Node<T>* head;
 public:
 	List() { head = 0; };
-	/*Visszaadja a lista elso elemet
+	/** \Visszaadja a lista elso elemet
 	*/
 	Node<T>* get_head() {
 		return head;
 	}
-	/*Hozzafuz egy uj node-ot a listahoz
+	/** \Hozzafuz egy uj node-ot a listahoz
+	* \param Typename T&
 	*/
 	void add(T new_data) {
 		Node<T>* n = new Node<T>();
@@ -42,7 +44,8 @@ public:
 			iterator->next = n;
 		}
 	}
-	/*Visszaadja a lista meretet
+	/** \Visszaadja a lista meretet
+	* \return size_t
 	*/
 	size_t get_size() {
 		size_t size = 0;
@@ -57,9 +60,9 @@ public:
 		}
 		return size;
 	}
-	/*s-edik elemevel ter vissza a listanak
-	@param size_t s
-	return Typename T&
+	/** \s-edik elemevel ter vissza a listanak
+	* \param size_t
+	* \return Typename T&
 	*/
 	T& get_data(size_t s) {
 		size_t it = 0;
@@ -70,8 +73,8 @@ public:
 		}
 		return iterator->data;
 	}
-	/*idx-edik elemevet eltavolitja a listabol
-	@param size_t
+	/** \idx-edik elemevet eltavolitja a listabol
+	* \param size_t
 	*/
 	void remove_from_list(size_t idx) {
 		Node<T>* it = head;
@@ -99,7 +102,7 @@ public:
 			}
 		}
 	};
-	/*Lista destruktora, kitorli a Node-okat (Node-ok hivja meg a bennuk tarolt adatokra a destruktort)
+	/** \Lista destruktora, kitorli a Node-okat (Node-ok hivja meg a bennuk tarolt adatokra a destruktort)
 	*/
 	~List() {
 		Node<T>* iterator = head;
