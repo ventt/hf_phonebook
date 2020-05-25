@@ -23,6 +23,9 @@ public:
 	/** \Visszaadja a lista elso elemet
 	*/
 	Node<T>* get_head() {
+		if (this == 0 || this->head == 0) {
+			return 0;
+		}
 		return head;
 	}
 	/** \Hozzafuz egy uj node-ot a listahoz
@@ -49,7 +52,7 @@ public:
 	*/
 	size_t get_size() {
 		size_t size = 0;
-		if (head == 0) {
+		if (get_head()) {
 			return size;
 		}
 		size++;
