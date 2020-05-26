@@ -1,24 +1,8 @@
-3
-teszt elek
-4
-4
-1
-1
-+36;20;555555
-1
 2
-tesztelek@teszt.com
-2
+dsa
 1
-Hungary;Miskolc;Arany Janos;555
-3
-2
-2
-tesztelek#zoom
-Teszt J nos
 1
-2
 1
-3;s;f;2
-fsa
+dsadsa
+dfsa
 0

@@ -19,13 +19,10 @@ struct Node {
 template <typename T> class List {
 	Node<T>* head;
 public:
-	List() { head = 0; };
+	List() : head(0) {};
 	/** \Visszaadja a lista elso elemet
 	*/
 	Node<T>* get_head() {
-		if (this == 0 || this->head == 0) {
-			return 0;
-		}
 		return head;
 	}
 	/** \Hozzafuz egy uj node-ot a listahoz
@@ -52,7 +49,7 @@ public:
 	*/
 	size_t get_size() {
 		size_t size = 0;
-		if (get_head()) {
+		if (this->head == 0) {
 			return size;
 		}
 		size++;

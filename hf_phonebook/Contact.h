@@ -14,7 +14,7 @@ class Contact : public serializable {
 	string  name;
 	List<Record*>* list;
 public:
-	Contact() : name(""), list(0) {}; //inicializáló listában adjuk meg a default értéket
+	Contact() : name("") { list = new List<Record*>(); }; //inicializáló listában adjuk meg a default értéket
 	Contact(string n) : name(n) { list = new List<Record*>(); };
 	Contact(string n, List<Record*>* l) : name(n), list(l) {};
 	Contact(const Contact& s) { //Másoló construktor
