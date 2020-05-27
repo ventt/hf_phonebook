@@ -2,6 +2,29 @@
 #include <stdlib.h>
 #include <fstream>
 #include "memtrace.h"
+
+// Menu staterol atnevezve, scope javitva
+enum MENU {
+	MENU_LIST_CONTACT,//0
+	MENU_ADD_CONTACT, //1
+	MENU_SEARCH_CONTACT, //2
+	MENU_SAVE, //3
+	MENU_EXIT //4
+};
+
+enum ADD_RECORD {
+	ADD_RECORD_EXIT,
+	ADD_RECORD_PHONE_NUMBER,
+	ADD_RECORD_ADDRESS,
+	ADD_RECORD_EMAIL,
+	ADD_RECORD_IM
+};
+
+enum EXIT_TYPE {
+	EXIT_TYPE_EXIT,
+	EXIT_TYPE_RETURN
+};
+
 /** \Elmenti a jelenlegi allapotot
 * \param PhoneBook&
 */
@@ -21,7 +44,7 @@ void get_save(PhoneBook& pb) {
 /** \szabvanyos bemenetrol olvas ki Integer-t, addig probalkozik amig nem Integert kap, megadhato stringkent a szoveg amivel bekeri az adatot
 * \param string
 */
-int read_int_from_terminal(string command) {
+int read_int_from_terminal(const string& command) {
 	int num = 0;
 
 	while (std::cout << command && !(std::cin >> num)) {
@@ -44,7 +67,7 @@ void terminal_header_view() {
 /** \Szabvanyos kimenetre kiirja a Contactokat
 * \param size_t
 */
-void menu_view(size_t number_of_contacts) {
+void menu_view(const size_t number_of_contacts) {
 	terminal_header_view();
 	std::cout << "1. View Contacts" << " (" << number_of_contacts << ")" << endl << "2. Add Contacts" << endl << "3. Search Contact" << endl << "4. Save" << endl << "5. Exit" << endl;
 }
@@ -62,7 +85,7 @@ void add_contact_view(Contact* ct) {
 /** \Szabvanyos kimenetre kilistazza a PhoneBook altal tarolt Contactokat
 *	\param PhoneBook&
 */
-void list_contacts(PhoneBook& pb) {
+void list_contacts(const PhoneBook& pb) {
 	for (size_t i = 0; i < pb.get_size(); i++) {
 		cout << i + 1 << ":" << pb.get(i).get_name() << " (" << pb.get(i).get_size() << ")" << endl;
 	}
@@ -70,10 +93,10 @@ void list_contacts(PhoneBook& pb) {
 /** \Letrehoz es hozzafuz a PhoneBook altal tarolt listara egy Contactot
 * \param PhoneBook&
 */
-void add_contact(PhoneBook* pb) {
+void add_contact(const PhoneBook& pb) {
 	Contact* ct = new Contact();
 	add_contact_view(ct);
-	pb->getList()->add(ct);
+	pb.getList()->add(ct);
 }
 /** \Formalisan kiir egy Contact-ot
 * \param Contact&
@@ -110,31 +133,27 @@ void edit_contact_name(Contact& c) {
 * \return recordType
 */
 RECORD_TYPE set_record_type() {
-	RECORD_TYPE recordt = RECORD_TYPE_PERSONAL;
-	int choice = 0;
+	RECORD_TYPE rt = RECORD_TYPE_PERSONAL;
 
 	cout << "1 = Personal, 2 = Work" << endl;
-	choice = read_int_from_terminal("Command: ");
+	const int choice = read_int_from_terminal("Command: ");
 	if (choice == 1) {
-		recordt = RECORD_TYPE_PERSONAL;
+		rt = RECORD_TYPE_PERSONAL;
 	}
 	else if (choice == 2) {
-		recordt = RECORD_TYPE_WORK;
+		rt = RECORD_TYPE_WORK;
 	}
 	else {
 		cout << endl << "Invalid command, Type is set default(Personal)" << endl;
-		recordt = RECORD_TYPE_PERSONAL;
+		rt = RECORD_TYPE_PERSONAL;
 	}
-	return recordt;
+	return rt;
 }
 /** \Letrehoz egy recordot amit hozzafuz a parameterkent kapott Contact listajahoz
 * \Contact&
 */
 void add_record_view(Contact& c) {
-	int choice = 0;
-	int exit = EXIT_TYPE_RETURN;
-
-	while (exit) {
+	for (int exit = EXIT_TYPE_RETURN; exit;) {
 		system("CLS");
 		contact_view(c);
 
@@ -151,7 +170,7 @@ void add_record_view(Contact& c) {
 		ImRecord* im = 0;
 
 		cout << "1 = Phone Number, 2 = Address, 3 = Email, 4 = IM, 0 = back" << endl;
-		choice = read_int_from_terminal("Choice: ");
+		int choice = read_int_from_terminal("Choice: ");
 
 		switch (choice)
 		{
@@ -250,11 +269,10 @@ void add_record_view(Contact& c) {
 /** \Kilistazza a parameterkent kapott int es PhoneBook& altal behatarolt Contact-ban tarolt elemeket, majd
 * \param int, PhoneBook&
 */
-void list_contact_view(int contact_number, const PhoneBook& pb) { //const pb
+void list_contact_view(const int contact_number, const PhoneBook& pb) { //const pb
 	contact_view(pb.get(contact_number - 1));
 	cout << "1 = Edit Contact name, 2 = Add record, 3 = Delete record, 4 = Delete contact, 0 = Back " << endl;
-	int choice = 0;
-	choice = read_int_from_terminal("Choice: ");
+	int choice = read_int_from_terminal("Choice: ");
 	system("CLS");
 	if (choice == 1) {
 		edit_contact_name(pb.get(contact_number - 1));
@@ -325,47 +343,44 @@ void search_view(PhoneBook& pb) {
 /** \A Program fomenuje, mondhatni a main
 * \param pb
 */
-void menu(PhoneBook* pb) {
-	int menu_state = 0;
-	int exit = EXIT_TYPE_RETURN;
-
-	while (exit) {
+void menu(PhoneBook& pb) {
+	for (int exit = EXIT_TYPE_RETURN; exit;) {
 		system("CLS");
-		menu_view(pb->get_size());
+		menu_view(pb.get_size());
 
-		menu_state = read_int_from_terminal("Command: ");
+		const int menu_state = read_int_from_terminal("Command: ");
 
 		system("CLS");
 		switch (menu_state - 1)
 		{
 		case MENU_LIST_CONTACT:
 			terminal_header_view();
-			list_contacts(*pb);
+			list_contacts(pb);
 			int contact_number;
 
 			contact_number = read_int_from_terminal("Give the contact number(0 is back): ");
 
 			system("CLS");
-			if (contact_number == 0 || contact_number - 1 > static_cast<int>(pb->get_size()))
+			if (contact_number == 0 || contact_number - 1 > static_cast<int>(pb.get_size()))
 				break;
-			list_contact_view(contact_number, *pb);
+			list_contact_view(contact_number, pb);
 			break;
 		case MENU_ADD_CONTACT:
 			terminal_header_view();
 			add_contact(pb);
 			break;
 		case MENU_SEARCH_CONTACT:
-			search_view(*pb);
+			search_view(pb);
 			break;
 		case MENU_EXIT:
 			cout << "Save?" << endl << "(For any other command, save is default)" << endl;
 			if (read_int_from_terminal("1 = yes, 2 = no\nCommand: ") != 2) { //choice el lett hagyva
-				save(*pb);
+				save(pb);
 			}
 			exit = EXIT_TYPE_EXIT;
 			break;
 		case MENU_SAVE:
-			save(*pb);
+			save(pb);
 			break;
 		default:
 

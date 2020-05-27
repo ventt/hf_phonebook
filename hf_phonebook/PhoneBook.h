@@ -29,7 +29,7 @@ public:
 	size_t get_size() const { return this->list->get_size(); }
 	void write(std::ofstream&) const;
 	void read(std::ifstream&);
-	List<size_t*>* search(string);
+	List<size_t*>* search(const string&);
 	~PhoneBook() { delete list; };
 };
 #endif // PHONEBOOK_H

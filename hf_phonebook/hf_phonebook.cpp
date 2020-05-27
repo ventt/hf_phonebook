@@ -11,9 +11,8 @@ int main()
 	Készítette: Széll Adrián Bence
 	Neptun kód: BPE3HL
 	*/
-	PhoneBook* pb = new PhoneBook();
-	get_save(*pb);
+	PhoneBook pb = PhoneBook();
+	get_save(pb);
 	menu(pb);
-	delete(pb);
 	return 0;
 }

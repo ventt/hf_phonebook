@@ -12,12 +12,12 @@ class EmailRecord : public Record {
 	string emailAddress;
 public:
 	EmailRecord() : Record(), emailAddress("") {}
-	EmailRecord(RECORD_TYPE r, string emailAddr) : Record(r), emailAddress(emailAddr) {}
+	EmailRecord(const RECORD_TYPE r, const string& emailAddr) : Record(r), emailAddress(emailAddr) {}
 	virtual string record_type() const { return "Email"; };
 	virtual string get_address() const { return emailAddress; };
 	virtual string get_type_of_childs() const { string t = ""; return t; };
 	void write(std::ofstream&) const;
-	virtual bool search(string);
+	virtual bool search(const string&);
 };
 
 class ImRecord : public Record {
@@ -25,24 +25,24 @@ class ImRecord : public Record {
 	string imAddress;
 public:
 	ImRecord() : Record(), im_type(IM_TYPE_SKYPE), imAddress("") {}
-	ImRecord(RECORD_TYPE r, IM_TYPE t, string imAddr) : Record(r), im_type(t), imAddress(imAddr) {}
+	ImRecord(const RECORD_TYPE r, const IM_TYPE t, const string& imAddr) : Record(r), im_type(t), imAddress(imAddr) {}
 	virtual string record_type() const { return "IM"; };
 	virtual string get_address() const { return imAddress; };
 	virtual string get_type_of_childs() const;
 	void write(std::ofstream&) const;
-	virtual bool search(string);
+	virtual bool search(const string&);
 };
 
 class AddressRecord : public Record {
 	AddressType address;
 public:
 	AddressRecord() : Record() {}
-	AddressRecord(RECORD_TYPE r, AddressType addr) : Record(r), address(addr) {}
+	AddressRecord(const RECORD_TYPE r, const AddressType addr) : Record(r), address(addr) {}
 	virtual string record_type() const { return "Address"; };
 	virtual string get_type_of_childs() const { string t = ""; return t; };
 	virtual string get_address() const;
 	void write(std::ofstream&) const;
-	virtual bool search(string);
+	virtual bool search(const string&);
 };
 
 class PhoneNumberRecord : public Record {
@@ -55,6 +55,6 @@ public:
 	virtual string get_type_of_childs() const;
 	virtual string get_address() const;
 	void write(std::ofstream&) const;
-	virtual bool search(string);
+	virtual bool search(const string&);
 };
 #endif // RECORDTYPES_H

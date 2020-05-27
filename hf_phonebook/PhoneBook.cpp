@@ -4,7 +4,7 @@
 * \param string
 * \return List<size_t*>*
 */
-List<size_t*>* PhoneBook::search(string s) {
+List<size_t*>* PhoneBook::search(const string& s) {
 	List<size_t*>* result = new List<size_t*>();
 
 	Node<Contact*>* it = this->list->get_head();

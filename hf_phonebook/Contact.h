@@ -31,13 +31,13 @@ public:
 		return *this;
 	};
 	string get_name() { return name; };
-	void set_name(string n) { name = n; };
+	void set_name(const string& n) { name = n; };
 	size_t get_size() { return this->list->get_size(); };
-	Record& getRecord(size_t s) { return *list->get_data(s); };
+	Record& getRecord(const size_t s) { return *list->get_data(s); };
 	List<Record*>* get_list() { return list; };
 	void write(std::ofstream&) const;
 	void read(std::ifstream&);
-	bool search(string);
+	bool search(const string&);
 	~Contact() { delete list; };
 };
 #endif // CONTACT_H

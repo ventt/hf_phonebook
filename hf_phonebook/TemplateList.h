@@ -38,7 +38,7 @@ public:
 	/** \Hozzafuz egy uj node-ot a listahoz
 	* \param Typename T&
 	*/
-	void add(T new_data) {
+	void add(const T new_data) {
 		Node<T>* n = new Node<T>();
 		n->data = new_data;
 		n->next = 0;
@@ -74,7 +74,7 @@ public:
 	* \param size_t
 	* \return Typename T&
 	*/
-	T& get_data(size_t s) {
+	T& get_data(const size_t s) {
 		size_t it = 0;
 		Node<T>* iterator = head;
 		while (iterator->next != 0 && it < s) {
@@ -86,7 +86,7 @@ public:
 	/** \idx-edik elemevet eltavolitja a listabol
 	* \param size_t
 	*/
-	void remove_from_list(size_t idx) {
+	void remove_from_list(const size_t idx) {
 		Node<T>* it = head;
 
 		// Ha a headet toroljuk

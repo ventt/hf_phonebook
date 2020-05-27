@@ -130,7 +130,7 @@ void PhoneNumberRecord::write(std::ofstream& os) const {
 * \param string
 * \return bool
 */
-bool EmailRecord::search(string s) {
+bool EmailRecord::search(const string& s) {
 	if (this->emailAddress.find(s) != std::string::npos) {
 		return true;
 	}
@@ -140,7 +140,7 @@ bool EmailRecord::search(string s) {
 * \param string
 * \return bool
 */
-bool AddressRecord::search(string s) {
+bool AddressRecord::search(const string& s) {
 	if (this->address.country.find(s) != std::string::npos ||
 		this->address.city.find(s) != std::string::npos ||
 		this->address.street.find(s) != std::string::npos ||
@@ -153,7 +153,7 @@ bool AddressRecord::search(string s) {
 * \param string
 * \return bool
 */
-bool ImRecord::search(string s) {
+bool ImRecord::search(const string& s) {
 	if (this->imAddress.find(s) != std::string::npos) {
 		return true;
 	}
@@ -163,7 +163,7 @@ bool ImRecord::search(string s) {
 * \param string
 * \return bool
 */
-bool PhoneNumberRecord::search(string s) {
+bool PhoneNumberRecord::search(const string& s) {
 	if (this->number.countryCode.find(s) != std::string::npos ||
 		std::to_string(this->number.provider).find(s) != std::string::npos ||
 		std::to_string(this->number.number).find(s) != std::string::npos) {

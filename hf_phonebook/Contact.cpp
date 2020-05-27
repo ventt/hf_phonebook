@@ -45,7 +45,7 @@ void Contact::write(std::ofstream& os) const {
 * \param string
 * \return bool
 */
-bool Contact::search(string s) {
+bool Contact::search(const string& s) {
 	if (s.empty())
 		return false;
 
@@ -85,6 +85,7 @@ void Contact::read(std::ifstream& is) {
 		is.ignore();
 	}
 	for (size_t i = 0; i < size; i++) {
+		// Switch miatt valtozokat itt kell deklaralni, mert switchben nem lehet
 		EmailRecord* mail = 0;
 		ImRecord* im = 0;
 		AddressRecord* adr = 0;
