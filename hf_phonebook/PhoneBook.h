@@ -24,7 +24,7 @@ public:
 		list->addAll(pb.list);
 		return *this;
 	};
-	Contact& get(size_t s) const { return *this->list->get_data(s); };
+	Contact& get(const size_t s) const { return *this->list->get_data(s); };
 	List<Contact*>* getList() const { return this->list; };
 	size_t get_size() const { return this->list->get_size(); }
 	void write(std::ofstream&) const;

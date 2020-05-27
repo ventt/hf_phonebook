@@ -8,27 +8,27 @@
 * \param string
 * \return phoneNumber
 */
-PhoneNumber get_phone_number(string l) {
-	PhoneNumber phone_number;
+PhoneNumber* get_phone_number(const string& l) {
+	PhoneNumber* phone_number = new PhoneNumber();
 	string string_int;
 	std::stringstream line(l);
-	std::getline(line, phone_number.countryCode, ';');
-	std::getline(line, string_int, ';'); phone_number.provider = stoi(string_int);
-	std::getline(line, string_int, ';'); phone_number.number = stoi(string_int);
+	std::getline(line, phone_number->countryCode, ';');
+	std::getline(line, string_int, ';'); phone_number->provider = stoi(string_int);
+	std::getline(line, string_int, ';'); phone_number->number = stoi(string_int);
 	return phone_number;
 }
 /** \Stringet kap és letrehoz egy enum addressType tipusu valtozot
 * \param string
 * \return addressType
 */
-AddressType get_address(string l) {
-	AddressType  address_type;
+AddressType* get_address(const string& l) {
+	AddressType* address_type = new AddressType();
 	std::stringstream line(l);
 	string string_int;
-	std::getline(line, address_type.country, ';');
-	std::getline(line, address_type.city, ';');
-	std::getline(line, address_type.street, ';');
-	std::getline(line, string_int, ';'); address_type.number = stoi(string_int);
+	std::getline(line, address_type->country, ';');
+	std::getline(line, address_type->city, ';');
+	std::getline(line, address_type->street, ';');
+	std::getline(line, string_int, ';'); address_type->number = stoi(string_int);
 	return address_type;
 }
 /** \Parameterkent megadott filestreambe ir ki egy Contact class-t

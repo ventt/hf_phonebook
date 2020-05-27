@@ -41,7 +41,7 @@ string ImRecord::get_type_of_childs() const {
 */
 string AddressRecord::get_address() const {
 	string t;
-	t = t + address.country + " " + address.city + " " + address.street + " " + std::to_string(address.number);
+	t = t + address->country + " " + address->city + " " + address->street + " " + std::to_string(address->number);
 	return t;
 }
 /** \Stringkent visszaadja az enum numberType-ban tarolt adatot, kiirasnal segit
@@ -49,7 +49,7 @@ string AddressRecord::get_address() const {
 */
 string PhoneNumberRecord::get_address() const {
 	string t;
-	t = number.countryCode + std::to_string(number.provider) + std::to_string(number.number);
+	t = number->countryCode + std::to_string(number->provider) + std::to_string(number->number);
 	return t;
 }
 /** \Parameterkent megadott filestreambe ki ir egy Email classt
@@ -76,7 +76,7 @@ void AddressRecord::write(std::ofstream& os) const {
 	else {
 		os << 2 << std::endl;
 	}
-	os << this->address.country << ";" << this->address.city << ";" << this->address.street << ";" << this->address.number << std::endl;
+	os << this->address->country << ";" << this->address->city << ";" << this->address->street << ";" << this->address->number << std::endl;
 };
 /** \Parameterkent megadott filestreambe ki ir egy IM classt
 * \param std::ofstream&
@@ -124,7 +124,7 @@ void PhoneNumberRecord::write(std::ofstream& os) const {
 	else {
 		os << 3 << std::endl; //3 = Satelite
 	}
-	os << this->number.countryCode << ";" << this->number.provider << ";" << this->number.number << std::endl;
+	os << this->number->countryCode << ";" << this->number->provider << ";" << this->number->number << std::endl;
 };
 /** \Parameterkent kap egy stringet, es megvizsgalja hogy az Email class altal tarolt adatokban elofordul-e, bool-al ter vissza
 * \param string
@@ -141,10 +141,10 @@ bool EmailRecord::search(const string& s) {
 * \return bool
 */
 bool AddressRecord::search(const string& s) {
-	if (this->address.country.find(s) != std::string::npos ||
-		this->address.city.find(s) != std::string::npos ||
-		this->address.street.find(s) != std::string::npos ||
-		std::to_string(this->address.number).find(s) != std::string::npos) {
+	if (this->address->country.find(s) != std::string::npos ||
+		this->address->city.find(s) != std::string::npos ||
+		this->address->street.find(s) != std::string::npos ||
+		std::to_string(this->address->number).find(s) != std::string::npos) {
 		return true;
 	}
 	return false;
@@ -164,9 +164,9 @@ bool ImRecord::search(const string& s) {
 * \return bool
 */
 bool PhoneNumberRecord::search(const string& s) {
-	if (this->number.countryCode.find(s) != std::string::npos ||
-		std::to_string(this->number.provider).find(s) != std::string::npos ||
-		std::to_string(this->number.number).find(s) != std::string::npos) {
+	if (this->number->countryCode.find(s) != std::string::npos ||
+		std::to_string(this->number->provider).find(s) != std::string::npos ||
+		std::to_string(this->number->number).find(s) != std::string::npos) {
 		return true;
 	}
 	return false;

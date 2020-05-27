@@ -34,27 +34,54 @@ public:
 };
 
 class AddressRecord : public Record {
-	AddressType address;
+	AddressType* address;
 public:
-	AddressRecord() : Record() {}
-	AddressRecord(const RECORD_TYPE r, const AddressType addr) : Record(r), address(addr) {}
+	AddressRecord() : Record() {
+		address = new AddressType();
+	}
+	AddressRecord(const AddressRecord& ar) {
+		address = (AddressType*)memcpy(new AddressType(), ar.address, sizeof(AddressType));
+	}
+	AddressRecord& operator=(const AddressRecord& ar) {
+		if (this == &ar) return *this;
+		delete address;
+		address = (AddressType*)memcpy(new AddressType(), ar.address, sizeof(AddressType));
+		return *this;
+	}
+	AddressRecord(const RECORD_TYPE r, AddressType* addr) : Record(r), address(addr) {}
+
 	virtual string record_type() const { return "Address"; };
 	virtual string get_type_of_childs() const { string t = ""; return t; };
 	virtual string get_address() const;
 	void write(std::ofstream&) const;
 	virtual bool search(const string&);
+	~AddressRecord() {
+		delete address;
+	}
 };
 
 class PhoneNumberRecord : public Record {
 	NUMBER_TYPE number_type;
-	PhoneNumber number;
+	PhoneNumber* number;
 public:
-	PhoneNumberRecord() : Record(), number_type(NUMBER_TYPE_MOBILE) {} //default konstruktor
-	PhoneNumberRecord(RECORD_TYPE r, NUMBER_TYPE t, PhoneNumber n) : Record(r), number_type(t), number(n) {}
+	PhoneNumberRecord() : Record(), number_type(NUMBER_TYPE::NUMBER_TYPE_MOBILE) {} //default konstruktor
+	PhoneNumberRecord(const RECORD_TYPE r, const NUMBER_TYPE t, PhoneNumber* n) : Record(r), number_type(t), number(n) {}
+	PhoneNumberRecord(const PhoneNumberRecord& pnr) {
+		number = (PhoneNumber*)memcpy(new PhoneNumber(), pnr.number, sizeof(PhoneNumber));
+	}
+	PhoneNumberRecord& operator=(const PhoneNumberRecord& pnr) {
+		if (this == &pnr) return *this;
+		delete number;
+		number = (PhoneNumber*)memcpy(new PhoneNumber(), pnr.number, sizeof(PhoneNumber));
+		return *this;
+	}
 	virtual string record_type() const { return "Phone number"; };
 	virtual string get_type_of_childs() const;
 	virtual string get_address() const;
 	void write(std::ofstream&) const;
 	virtual bool search(const string&);
+	~PhoneNumberRecord() {
+		delete number;
+	}
 };
 #endif // RECORDTYPES_H

@@ -158,8 +158,8 @@ void add_record_view(Contact& c) {
 		contact_view(c);
 
 		NUMBER_TYPE nt = NUMBER_TYPE_MOBILE;
-		PhoneNumber nb;
-		AddressType at;
+		PhoneNumber* nb;
+		AddressType* at;
 		IM_TYPE type = IM_TYPE_SKYPE;
 		string mail = "";
 		string addr = "";
@@ -198,10 +198,11 @@ void add_record_view(Contact& c) {
 
 			cout << "Country code(+36): ";
 			cin.ignore();
-			getline(cin, nb.countryCode);
+			nb = new PhoneNumber();
+			getline(cin, nb->countryCode);
 
-			nb.provider = read_int_from_terminal("Provider number: ");
-			nb.number = read_int_from_terminal("Number: ");
+			nb->provider = read_int_from_terminal("Provider number: ");
+			nb->number = read_int_from_terminal("Number: ");
 
 			nn = new PhoneNumberRecord(recordt, nt, nb);
 			c.get_list()->add(nn);
@@ -211,12 +212,13 @@ void add_record_view(Contact& c) {
 			recordt = set_record_type();
 			cout << "Country: ";
 			cin.ignore();
-			getline(cin, at.country);
+			at = new AddressType();
+			getline(cin, at->country);
 			cout << " city: ";
-			getline(cin, at.city);
+			getline(cin, at->city);
 			cout << " street: ";
-			getline(cin, at.street);
-			at.number = read_int_from_terminal("House number: ");
+			getline(cin, at->street);
+			at->number = read_int_from_terminal("House number: ");
 			ad = new AddressRecord(recordt, at);
 			c.get_list()->add(ad);
 
