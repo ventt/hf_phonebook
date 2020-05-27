@@ -3,9 +3,9 @@
 #include <iostream>
 #include "memtrace.h"
 #include <fstream>
-struct serializable {
+struct Serializable {
 	virtual void write(std::ofstream&) const {};
 	virtual void read(std::ifstream&) {};
-	virtual ~serializable() {}
+	virtual ~Serializable() {}
 };
 #endif // !SERIALIZABLE_H

@@ -13,6 +13,17 @@ class PhoneBook {
 	List<Contact*>* list;
 public:
 	PhoneBook() { list = new List<Contact*>(); }
+	PhoneBook(const PhoneBook& pb) {
+		list = new List<Contact*>();
+		list->addAll(pb.list);
+	}
+	PhoneBook& operator=(const PhoneBook& pb) {
+		if (this == &pb) return *this;
+		delete list;
+		list = new List<Contact*>();
+		list->addAll(pb.list);
+		return *this;
+	};
 	Contact& get(size_t s) const { return *this->list->get_data(s); };
 	List<Contact*>* getList() const { return this->list; };
 	size_t get_size() const { return this->list->get_size(); }

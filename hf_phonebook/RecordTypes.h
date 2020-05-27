@@ -8,57 +8,53 @@
 #include "memtrace.h"
 using std::string;
 
-class Email : public Record {
+class EmailRecord : public Record {
 	string emailAddress;
 public:
-	Email() : Record(), emailAddress("") {}
-	Email(recordType r, string emailAddr) : Record(r), emailAddress(emailAddr) {}
+	EmailRecord() : Record(), emailAddress("") {}
+	EmailRecord(RECORD_TYPE r, string emailAddr) : Record(r), emailAddress(emailAddr) {}
 	virtual string record_type() const { return "Email"; };
 	virtual string get_address() const { return emailAddress; };
 	virtual string get_type_of_childs() const { string t = ""; return t; };
 	void write(std::ofstream&) const;
 	virtual bool search(string);
-	//~Email() {};
 };
 
-class IM : public Record {
-	imType im_type; //typeról refactorálva im_type-ra
+class ImRecord : public Record {
+	IM_TYPE im_type; //typeról refactorálva im_type-ra
 	string imAddress;
 public:
-	IM() : Record(), im_type(Skype), imAddress("") {}
-	IM(recordType r, imType t, string imAddr) : Record(r), im_type(t), imAddress(imAddr) {}
+	ImRecord() : Record(), im_type(IM_TYPE_SKYPE), imAddress("") {}
+	ImRecord(RECORD_TYPE r, IM_TYPE t, string imAddr) : Record(r), im_type(t), imAddress(imAddr) {}
 	virtual string record_type() const { return "IM"; };
 	virtual string get_address() const { return imAddress; };
 	virtual string get_type_of_childs() const;
 	void write(std::ofstream&) const;
 	virtual bool search(string);
-	//~IM() {};
 };
 
-class Address : public Record {
-	addressType address;
+class AddressRecord : public Record {
+	AddressType address;
 public:
-	Address() : Record() {}
-	Address(recordType r, addressType addr) : Record(r), address(addr) {}
+	AddressRecord() : Record() {}
+	AddressRecord(RECORD_TYPE r, AddressType addr) : Record(r), address(addr) {}
 	virtual string record_type() const { return "Address"; };
 	virtual string get_type_of_childs() const { string t = ""; return t; };
 	virtual string get_address() const;
 	void write(std::ofstream&) const;
 	virtual bool search(string);
-	//~Address() {};
 };
 
-class PhoneNumber : public Record {
-	numberType number_type;
-	phoneNumber number;
+class PhoneNumberRecord : public Record {
+	NUMBER_TYPE number_type;
+	PhoneNumber number;
 public:
-	PhoneNumber() : Record(), number_type(Mobil) {} //default konstruktor
-	PhoneNumber(recordType r, numberType t, phoneNumber n) : Record(r), number_type(t), number(n) {}
+	PhoneNumberRecord() : Record(), number_type(NUMBER_TYPE_MOBILE) {} //default konstruktor
+	PhoneNumberRecord(RECORD_TYPE r, NUMBER_TYPE t, PhoneNumber n) : Record(r), number_type(t), number(n) {}
 	virtual string record_type() const { return "Phone number"; };
 	virtual string get_type_of_childs() const;
 	virtual string get_address() const;
 	void write(std::ofstream&) const;
 	virtual bool search(string);
-	//~PhoneNumber() {};
 };
 #endif // RECORDTYPES_H

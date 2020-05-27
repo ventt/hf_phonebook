@@ -82,7 +82,7 @@ void contact_view(Contact& c) {
 	cout << c.get_name() << ":" << endl;
 	for (size_t i = 0; i < c.get_size(); i++) {
 		cout << i + 1 << "->";
-		if (c.getRecord(i).get_type() == Personal) {
+		if (c.getRecord(i).get_type() == RECORD_TYPE_PERSONAL) {
 			cout << "Personal" << endl;
 		}
 		else {
@@ -109,21 +109,21 @@ void edit_contact_name(Contact& c) {
 /** \Letrehoz egy enum recordType valtozot es visszater vele
 * \return recordType
 */
-recordType set_record_type() {
-	recordType recordt = Personal;
+RECORD_TYPE set_record_type() {
+	RECORD_TYPE recordt = RECORD_TYPE_PERSONAL;
 	int choice = 0;
 
 	cout << "1 = Personal, 2 = Work" << endl;
 	choice = read_int_from_terminal("Command: ");
 	if (choice == 1) {
-		recordt = Personal;
+		recordt = RECORD_TYPE_PERSONAL;
 	}
 	else if (choice == 2) {
-		recordt = Work;
+		recordt = RECORD_TYPE_WORK;
 	}
 	else {
 		cout << endl << "Invalid command, Type is set default(Personal)" << endl;
-		recordt = Personal;
+		recordt = RECORD_TYPE_PERSONAL;
 	}
 	return recordt;
 }
@@ -132,45 +132,45 @@ recordType set_record_type() {
 */
 void add_record_view(Contact& c) {
 	int choice = 0;
-	int exit = stay;
+	int exit = EXIT_TYPE_RETURN;
 
 	while (exit) {
 		system("CLS");
 		contact_view(c);
 
-		numberType nt = Mobil;
-		phoneNumber nb;
-		addressType at;
-		imType type = Skype;
+		NUMBER_TYPE nt = NUMBER_TYPE_MOBILE;
+		PhoneNumber nb;
+		AddressType at;
+		IM_TYPE type = IM_TYPE_SKYPE;
 		string mail = "";
 		string addr = "";
-		recordType recordt = Personal;
-		Address* ad = 0;
-		PhoneNumber* nn = 0;
-		Email* m = 0;
-		IM* im = 0;
+		RECORD_TYPE recordt = RECORD_TYPE_PERSONAL;
+		AddressRecord* ad = 0;
+		PhoneNumberRecord* nn = 0;
+		EmailRecord* m = 0;
+		ImRecord* im = 0;
 
 		cout << "1 = Phone Number, 2 = Address, 3 = Email, 4 = IM, 0 = back" << endl;
 		choice = read_int_from_terminal("Choice: ");
 
 		switch (choice)
 		{
-		case 1: //Telefonszám record hozzáadása
+		case ADD_RECORD_PHONE_NUMBER: //Telefonszám record hozzáadása
 			recordt = set_record_type();
 			cout << "1 = Landline, 2 = Satellite, 3 = Mobil, 0 = back" << endl;
 			choice = read_int_from_terminal("Choice: ");
 			if (choice == 1) {
-				nt = Landline;
+				nt = NUMBER_TYPE_LANDLINE;
 			}
 			else if (choice == 2) {
-				nt = Satellite;
+				nt = NUMBER_TYPE_SATELLITE;
 			}
 			else if (choice == 0) {
-				exit = turn_off;
+				exit = EXIT_TYPE_EXIT;
 				break;
 			}
 			else if (choice == 3) {
-				nt = Mobil;
+				nt = NUMBER_TYPE_MOBILE;
 			}
 			else {
 				cout << endl << "Invalid command!";
@@ -184,11 +184,11 @@ void add_record_view(Contact& c) {
 			nb.provider = read_int_from_terminal("Provider number: ");
 			nb.number = read_int_from_terminal("Number: ");
 
-			nn = new PhoneNumber(recordt, nt, nb);
+			nn = new PhoneNumberRecord(recordt, nt, nb);
 			c.get_list()->add(nn);
 
 			break;
-		case 2: //Cím record hozzáadása
+		case ADD_RECORD_ADDRESS: //Cím record hozzáadása
 			recordt = set_record_type();
 			cout << "Country: ";
 			cin.ignore();
@@ -198,34 +198,34 @@ void add_record_view(Contact& c) {
 			cout << " street: ";
 			getline(cin, at.street);
 			at.number = read_int_from_terminal("House number: ");
-			ad = new Address(recordt, at);
+			ad = new AddressRecord(recordt, at);
 			c.get_list()->add(ad);
 
 			break;
-		case 3: //Email record hozzáadása
+		case ADD_RECORD_EMAIL: //Email record hozzáadása
 			recordt = set_record_type();
 			cout << "Email: ";
 			cin.ignore();
 			getline(cin, mail);
-			m = new Email(recordt, mail);
+			m = new EmailRecord(recordt, mail);
 			c.get_list()->add(m);
 
 			break;
-		case 4: // im hozzáadás
+		case ADD_RECORD_IM: // im hozzáadás
 			recordt = set_record_type();
 			cout << "1 = Skype, 2 = Zoom, 3 = Discord, 0 = back" << endl;
 			choice = read_int_from_terminal("Choice: ");
 			if (choice == 1) {
-				type = Skype;
+				type = IM_TYPE_SKYPE;
 			}
 			else if (choice == 2) {
-				type = Zoom;
+				type = IM_TYPE_ZOOM;
 			}
 			else if (choice == 3) {
-				type = Discord;
+				type = IM_TYPE_DISCORD;
 			}
 			else if (choice == 0) {
-				exit = turn_off;
+				exit = EXIT_TYPE_EXIT;
 			}
 			else {
 				cout << endl << "Invalid command!, IM type set as Default(Skype)" << endl;
@@ -234,12 +234,12 @@ void add_record_view(Contact& c) {
 			cout << endl << "Address: ";
 			cin.ignore();
 			getline(cin, addr);
-			im = new IM(recordt, type, addr);
+			im = new ImRecord(recordt, type, addr);
 			c.get_list()->add(im);
 
 			break;
-		case 0:  //Kilépés
-			exit = turn_off;
+		case ADD_RECORD_EXIT:  //Kilépés
+			exit = EXIT_TYPE_EXIT;
 			break;
 		default: //Nem jó parancs
 			cout << endl << "Invalid command!" << endl;
@@ -327,7 +327,7 @@ void search_view(PhoneBook& pb) {
 */
 void menu(PhoneBook* pb) {
 	int menu_state = 0;
-	int exit = stay;
+	int exit = EXIT_TYPE_RETURN;
 
 	while (exit) {
 		system("CLS");
@@ -338,7 +338,7 @@ void menu(PhoneBook* pb) {
 		system("CLS");
 		switch (menu_state - 1)
 		{
-		case list_contact_Screen:
+		case MENU_LIST_CONTACT:
 			terminal_header_view();
 			list_contacts(*pb);
 			int contact_number;
@@ -350,21 +350,21 @@ void menu(PhoneBook* pb) {
 				break;
 			list_contact_view(contact_number, *pb);
 			break;
-		case add_Contact_Screen:
+		case MENU_ADD_CONTACT:
 			terminal_header_view();
 			add_contact(pb);
 			break;
-		case search_Contact_Screen:
+		case MENU_SEARCH_CONTACT:
 			search_view(*pb);
 			break;
-		case exit_app:
+		case MENU_EXIT:
 			cout << "Save?" << endl << "(For any other command, save is default)" << endl;
 			if (read_int_from_terminal("1 = yes, 2 = no\nCommand: ") != 2) { //choice el lett hagyva
 				save(*pb);
 			}
-			exit = turn_off;
+			exit = EXIT_TYPE_EXIT;
 			break;
-		case save_screen:
+		case MENU_SAVE:
 			save(*pb);
 			break;
 		default:

@@ -3,13 +3,13 @@
 /** \Stringkent visszaadja a PhoneNumber class tipusat, kiirasnal segit
 * \return string
 */
-string PhoneNumber::get_type_of_childs() const {
+string PhoneNumberRecord::get_type_of_childs() const {
 	string t;
-	if (number_type == Mobil) {
+	if (number_type == NUMBER_TYPE::NUMBER_TYPE_MOBILE) {
 		t = "Mobil";
 		return t;
 	}
-	else if (number_type == Landline) {
+	else if (number_type == NUMBER_TYPE::NUMBER_TYPE_LANDLINE) {
 		t = "Landline";
 		return t;
 	}
@@ -21,13 +21,13 @@ string PhoneNumber::get_type_of_childs() const {
 /** \Stringkent visszaadja a IM tipusat, kiirasnal segit
 * \return string
 */
-string IM::get_type_of_childs() const {
+string ImRecord::get_type_of_childs() const {
 	string t;
-	if (im_type == Skype) {
+	if (im_type == IM_TYPE_SKYPE) {
 		t = "Skype";
 		return t;
 	}
-	else if (im_type == Zoom) {
+	else if (im_type == IM_TYPE_ZOOM) {
 		t = "Zoom";
 		return t;
 	}
@@ -39,7 +39,7 @@ string IM::get_type_of_childs() const {
 /** \Stringkent visszaadja az enum addressType-ban tarolt adatot, kiirasnal segit
 * \return string
 */
-string Address::get_address() const {
+string AddressRecord::get_address() const {
 	string t;
 	t = t + address.country + " " + address.city + " " + address.street + " " + std::to_string(address.number);
 	return t;
@@ -47,7 +47,7 @@ string Address::get_address() const {
 /** \Stringkent visszaadja az enum numberType-ban tarolt adatot, kiirasnal segit
 *	\string
 */
-string PhoneNumber::get_address() const {
+string PhoneNumberRecord::get_address() const {
 	string t;
 	t = number.countryCode + std::to_string(number.provider) + std::to_string(number.number);
 	return t;
@@ -55,9 +55,9 @@ string PhoneNumber::get_address() const {
 /** \Parameterkent megadott filestreambe ki ir egy Email classt
 * \param std::ofstream&
 */
-void Email::write(std::ofstream& os) const {
+void EmailRecord::write(std::ofstream& os) const {
 	os << 1 << std::endl;
-	if (this->type == Personal) {
+	if (this->type == RECORD_TYPE_PERSONAL) {
 		os << 1 << std::endl;
 	}
 	else {
@@ -68,9 +68,9 @@ void Email::write(std::ofstream& os) const {
 /** \Parameterkent megadott filestreambe ki ir egy Address classt
 * \param std::ofstream&
 */
-void Address::write(std::ofstream& os) const {
+void AddressRecord::write(std::ofstream& os) const {
 	os << 2 << std::endl;
-	if (this->type == Personal) {
+	if (this->type == RECORD_TYPE_PERSONAL) {
 		os << 1 << std::endl;
 	}
 	else {
@@ -81,20 +81,20 @@ void Address::write(std::ofstream& os) const {
 /** \Parameterkent megadott filestreambe ki ir egy IM classt
 * \param std::ofstream&
 */
-void IM::write(std::ofstream& os) const {
+void ImRecord::write(std::ofstream& os) const {
 	os << 3 << std::endl;
 
-	if (this->get_type() == Personal) {
+	if (this->get_type() == RECORD_TYPE_PERSONAL) {
 		os << 1 << std::endl;
 	}
 	else {
 		os << 2 << std::endl;
 	}
 
-	if (this->im_type == Skype) {
+	if (this->im_type == IM_TYPE_SKYPE) {
 		os << 1 << std::endl;  // 1 = Skype
 	}
-	else if (this->im_type == Zoom) {
+	else if (this->im_type == IM_TYPE_ZOOM) {
 		os << 2 << std::endl; // 2 = Zoom
 	}
 	else {
@@ -105,20 +105,20 @@ void IM::write(std::ofstream& os) const {
 /** \Parameterkent megadott filestreambe ki ir egy PhoneNumber classt
 * \param std::ofstream&
 */
-void PhoneNumber::write(std::ofstream& os) const {
+void PhoneNumberRecord::write(std::ofstream& os) const {
 	os << 4 << std::endl;
 
-	if (this->type == Personal) {
+	if (this->type == RECORD_TYPE_PERSONAL) {
 		os << 1 << std::endl;
 	}
 	else {
 		os << 2 << std::endl;
 	}
 
-	if (this->number_type == Mobil) {
+	if (this->number_type == NUMBER_TYPE_MOBILE) {
 		os << 1 << std::endl;  //1 = mobil
 	}
-	else if (this->number_type == Landline) {
+	else if (this->number_type == NUMBER_TYPE_LANDLINE) {
 		os << 2 << std::endl; //2 = landline
 	}
 	else {
@@ -130,7 +130,7 @@ void PhoneNumber::write(std::ofstream& os) const {
 * \param string
 * \return bool
 */
-bool Email::search(string s) {
+bool EmailRecord::search(string s) {
 	if (this->emailAddress.find(s) != std::string::npos) {
 		return true;
 	}
@@ -140,7 +140,7 @@ bool Email::search(string s) {
 * \param string
 * \return bool
 */
-bool Address::search(string s) {
+bool AddressRecord::search(string s) {
 	if (this->address.country.find(s) != std::string::npos ||
 		this->address.city.find(s) != std::string::npos ||
 		this->address.street.find(s) != std::string::npos ||
@@ -153,7 +153,7 @@ bool Address::search(string s) {
 * \param string
 * \return bool
 */
-bool IM::search(string s) {
+bool ImRecord::search(string s) {
 	if (this->imAddress.find(s) != std::string::npos) {
 		return true;
 	}
@@ -163,7 +163,7 @@ bool IM::search(string s) {
 * \param string
 * \return bool
 */
-bool PhoneNumber::search(string s) {
+bool PhoneNumberRecord::search(string s) {
 	if (this->number.countryCode.find(s) != std::string::npos ||
 		std::to_string(this->number.provider).find(s) != std::string::npos ||
 		std::to_string(this->number.number).find(s) != std::string::npos) {

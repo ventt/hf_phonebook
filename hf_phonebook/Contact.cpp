@@ -4,23 +4,12 @@
 #include "misc.h"
 #include <sstream>
 #include "memtrace.h"
-/** /Értékadó operátor
-	/param Contact&
-	/return Contact&
-*/
-Contact& Contact::operator=(const Contact& c) {
-	if (this != &c) {
-		this->name = c.name;
-		this->list = c.list;
-	}
-	return *this;
-}
 /** \stringet kap és letrehoz egy enum phoneNumber tipusu valtozot
 * \param string
 * \return phoneNumber
 */
-phoneNumber get_phone_number(string l) {
-	phoneNumber phone_number;
+PhoneNumber get_phone_number(string l) {
+	PhoneNumber phone_number;
 	string string_int;
 	std::stringstream line(l);
 	std::getline(line, phone_number.countryCode, ';');
@@ -32,8 +21,8 @@ phoneNumber get_phone_number(string l) {
 * \param string
 * \return addressType
 */
-addressType get_address(string l) {
-	addressType  address_type;
+AddressType get_address(string l) {
+	AddressType  address_type;
 	std::stringstream line(l);
 	string string_int;
 	std::getline(line, address_type.country, ';');
@@ -82,24 +71,24 @@ void Contact::read(std::ifstream& is) {
 	string l = ""; //egesz sor
 	std::stringstream line(l);
 
-	numberType number_type = Mobil;
+	NUMBER_TYPE number_type = NUMBER_TYPE_MOBILE;
 
-	imType imtype = Skype;
+	IM_TYPE imtype = IM_TYPE_SKYPE;
 	int type = 0;
 
 	string string_int = "";
 
 	int pers_or_work = 0;
 	int which_record = 0;
-	recordType rt = Personal;
+	RECORD_TYPE rt = RECORD_TYPE_PERSONAL;
 	if (size == 0) { //üres recordList esetén
 		is.ignore();
 	}
 	for (size_t i = 0; i < size; i++) {
-		Email* mail = 0;
-		IM* im = 0;
-		Address* adr = 0;
-		PhoneNumber* pn = 0;
+		EmailRecord* mail = 0;
+		ImRecord* im = 0;
+		AddressRecord* adr = 0;
+		PhoneNumberRecord* pn = 0;
 		l.clear();
 		line.clear();
 
@@ -107,10 +96,10 @@ void Contact::read(std::ifstream& is) {
 		is >> pers_or_work;
 
 		if (pers_or_work == 1) {
-			rt = Personal;
+			rt = RECORD_TYPE_PERSONAL;
 		}
 		else {
-			rt = Work;
+			rt = RECORD_TYPE_WORK;
 		}
 
 		switch (which_record)
@@ -119,47 +108,47 @@ void Contact::read(std::ifstream& is) {
 		{
 			is.ignore();
 			std::getline(is, l);
-			mail = new Email(rt, l);
+			mail = new EmailRecord(rt, l);
 			this->list->add(mail);
 			break;
 		}
 		case 2:
 			is.ignore();
 			std::getline(is, l);
-			adr = new Address(rt, get_address(l));
+			adr = new AddressRecord(rt, get_address(l));
 			this->list->add(adr);
 			break;
 		case 3:
 			is >> type;
 			is.ignore();
 			if (type == 1) {
-				imtype = Skype;
+				imtype = IM_TYPE_SKYPE;
 			}
 			else if (type == 2) {
-				imtype = Zoom;
+				imtype = IM_TYPE_ZOOM;
 			}
 			else {
-				type = Discord;
+				type = IM_TYPE_DISCORD;
 			}
 			std::getline(is, l);
-			im = new IM(rt, imtype, l);
+			im = new ImRecord(rt, imtype, l);
 			this->list->add(im);
 			break;
 		case 4:
 			is >> type;
 			is.ignore();
 			if (type == 1) {
-				number_type = Mobil;
+				number_type = NUMBER_TYPE_MOBILE;
 			}
 			else if (type == 2) {
-				number_type = Landline;
+				number_type = NUMBER_TYPE_LANDLINE;
 			}
 			else {
-				number_type = Satellite;
+				number_type = NUMBER_TYPE_SATELLITE;
 			}
 
 			std::getline(is, l);
-			pn = new PhoneNumber(rt, number_type, get_phone_number(l));
+			pn = new PhoneNumberRecord(rt, number_type, get_phone_number(l));
 			this->list->add(pn);
 			break;
 		default:

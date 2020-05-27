@@ -19,9 +19,6 @@ List<size_t*>* PhoneBook::search(string s) {
 
 	return result;
 }
-/** \Kiirja az egesz PhoneBook class allapotat a file streamre
-* \param std::ofstream&
-*/
 void PhoneBook::write(std::ofstream& os) const {
 	os << this->list->get_size() << std::endl;
 	for (size_t i = 0; i < this->list->get_size(); i++) {

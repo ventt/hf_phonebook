@@ -5,31 +5,31 @@
 /*enumok és egyéb típusok amikre szüksége lehet a programnak*/
 using std::string;
 
-enum recordType
+enum RECORD_TYPE
 {
-	Personal,
-	Work
+	RECORD_TYPE_PERSONAL,
+	RECORD_TYPE_WORK
 };
-enum imType
+enum IM_TYPE
 {
-	Skype,
-	Zoom,
-	Discord
+	IM_TYPE_SKYPE,
+	IM_TYPE_ZOOM,
+	IM_TYPE_DISCORD
 };
-enum numberType
+enum NUMBER_TYPE
 {
-	Mobil,
-	Landline,
-	Satellite
+	NUMBER_TYPE_MOBILE,
+	NUMBER_TYPE_LANDLINE,
+	NUMBER_TYPE_SATELLITE
 };
-struct addressType
+struct AddressType
 {
 	string country = "";
 	string city = "";
 	string street = "";
 	int number = 0;
 };
-struct phoneNumber
+struct PhoneNumber
 {
 	string countryCode = "";
 	int provider = 0;

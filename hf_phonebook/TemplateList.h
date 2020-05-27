@@ -20,6 +20,16 @@ template <typename T> class List {
 	Node<T>* head;
 public:
 	List() : head(0) {};
+
+	/**
+	Hozzaad minden elemet egy masik listabol es meghivja a copy konstruktort minden elemre
+	*/
+	void addAll(const List<T>* l) {
+		for (Node<T>* it = l->head; it != 0; it = it->next) {
+			add(it->data);
+		}
+	}
+
 	/** \Visszaadja a lista elso elemet
 	*/
 	Node<T>* get_head() {
